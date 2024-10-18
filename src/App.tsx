@@ -46,10 +46,10 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/data', {
+    axios.get(process.env.REACT_APP_API_HOST + '/api/views/f7871213-03ef-48f1-bf27-372c7516411a/data', {
     //axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/cached-data', {
       headers: {
-        'Authorization': `Bearer c94ebcda-d9ba-4e29-a755-b2dd55d48774`
+        'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
       }
     })
     .then(response => {

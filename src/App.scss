@@ -1,0 +1,45 @@
+.correcalles {
+  max-width:1180px;
+  margin:auto;
+  .ant-tabs-nav {
+    margin: 0px;
+    .ant-tabs-tab-active {
+      background-color: #e1e1ff;
+      .ant-tabs-tab-btn {
+        color: black;
+        font-weight: bold;
+      }
+    }
+  }
+  .invocatorItem, .matchItem {
+    border-bottom: 1px solid #ebebeb;
+    .invocatorHead, .matchHead {
+      display: flex;
+      justify-content: space-between;  
+      align-items: center;             
+      padding: 10px;
+      cursor: pointer;
+      div {
+        flex: 1;                       
+        text-align: center;  
+      }
+    }
+    .invocatorHead {
+      background-color: #e1e1ff;
+    }
+    .green {
+      background-color: #e8ffe8;
+    }
+    .red {
+      background-color: #ffdada;
+    }
+    .matchContent {
+      padding: 10px;
+      background-color: #f4f4f4;
+  
+      .progress {
+        margin-top: 10px;
+      }
+    }
+  }
+}

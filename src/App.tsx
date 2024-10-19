@@ -3,6 +3,7 @@ import './App.scss';
 import InvocatorList from './components/InvocatorList';
 import axios from 'axios';
 import { Tabs } from 'antd';
+import {useParams} from "react-router-dom";
 
 export interface Match {
   assistMePings: number;
@@ -44,12 +45,12 @@ export interface Invocator {
 
 function App() {
   const [data, setData] = useState([]);
-
+  const { viewId } = useParams()
   useEffect(() => {
-    axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/data', {
+    axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/data`, {
     //axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/cached-data', {
       headers: {
-        'Authorization': `Bearer c94ebcda-d9ba-4e29-a755-b2dd55d48774`
+        'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
       }
     })
     .then(response => {
@@ -59,7 +60,7 @@ function App() {
     .catch(error => {
       console.error(error);
     });
-  }, []);
+  }, [viewId]);
 
   const onChange = (key: string) => {
     console.log(key);

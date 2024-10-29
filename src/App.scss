@@ -33,6 +33,18 @@
       .small-img {
         width: 40px;
       }
+      .role-item {
+        display: flex;
+        img {
+          width: 40px;
+        }
+        .ant-progress {
+          padding-top: 10px;
+        }
+      }
+    }
+    .matchesResume {
+      background-color: #ebebeb;
     }
     .invocatorHead {
       background-color: #e1e1ff;

@@ -34,7 +34,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
     return acc;
   }, {});
 
-  const SortedChampsPicked = Object.entries(champsPicked)
+  const sortedChampsPicked = Object.entries(champsPicked)
     .map(([name, data]) => ({
       name: name,
       count: data.count,
@@ -44,6 +44,25 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
       deaths: data.deaths,
     }))
     .sort((a, b) => b.count - a.count);
+
+  const roleOrder = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "SUPPORT"];
+
+  const rolesPicked = item.matches.reduce<{[key: string]: { count: number, wins: number } }>((acc, match) => {
+    const role = match.individualPosition;
+    if (!acc[role]) {
+      acc[role] = { count: 0, wins: 0 };
+    }
+    if (match.win) acc[role].wins += 1;
+    acc[role].count += 1;
+    return acc;
+  }, {});
+  
+  const sortedRolesPicked = roleOrder.map((role) => ({
+    role: role,
+    count: rolesPicked[role]?.count || 0,
+    wins: rolesPicked[role]?.wins || 0
+  }));
+  console.log(sortedRolesPicked);
 
   return (
     <div className="MatchesList"> 
@@ -59,15 +78,20 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
           <div></div>
         </div>
         <div>
-          {SortedChampsPicked.slice(0,3).map((champ) => (
+          {sortedChampsPicked.slice(0,3).map((champ) => (
             <li key={champ.name}>
               <img className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
               <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}</span></div>
             </li>
           ))}
         </div>
-        <div>
-          
+        <div> 
+          {sortedRolesPicked.map((role) => (
+            <li className="role-item" key={role.role}>
+              <img className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>
+              <Progress size={[300, 15]} strokeColor={`#ff5c5ce0`} percent={(role.count)/num_matches*100} success={{ percent: role.wins/num_matches*100, strokeColor: '#00d927' }} />
+            </li>
+          ))}
         </div>
       </div>
       {item.matches.map((match) => {

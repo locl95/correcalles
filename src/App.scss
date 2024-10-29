@@ -13,7 +13,7 @@
   }
   .invocatorItem, .matchItem {
     border-bottom: 1px solid #ebebeb;
-    .invocatorHead, .matchHead {
+    .invocatorHead, .matchHead, .matchesResume {
       display: flex;
       justify-content: space-between;  
       align-items: center;             
@@ -22,6 +22,16 @@
       div {
         flex: 1;                       
         text-align: center;  
+      }
+      .icon-image {
+        max-width: 40px;
+        img {
+          width: 100%;
+          vertical-align: middle;
+        }
+      }
+      .small-img {
+        width: 40px;
       }
     }
     .invocatorHead {

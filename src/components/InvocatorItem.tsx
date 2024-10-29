@@ -10,6 +10,12 @@ const InvocatorItem: React.FC<{invocator: Invocator, type: string}> = ({ invocat
   return (
     <div className="invocatorItem">
       <div className="invocatorHead" onClick={() => setVisible(!visible)}>
+        <div className='icon-image'>
+          <img 
+            src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/profileicon/${invocator.summonerIcon}.png`}
+            alt='icon'
+          />
+        </div>
         <div>{invocator.summonerName}</div>
         <div>{type === `FLEX` ? invocator.leagues.RANKED_FLEX_SR.tier + ` ` + invocator.leagues.RANKED_FLEX_SR.rank : 
                                   invocator.leagues.RANKED_SOLO_5x5.tier + ` ` + invocator.leagues.RANKED_SOLO_5x5.rank}</div>

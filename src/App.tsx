@@ -19,6 +19,7 @@ export interface Match {
   visionWardsBoughtInGame: number;
   wardsPlaced: number;
   win: boolean;
+  championName: string;
 }
 
 export interface Ranked {
@@ -46,7 +47,7 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/data', {
+    axios.get('http://localhost:8080/api/views/9317eb75-684a-4b9a-a7e7-014bb822a500/data', {
     //axios.get('http://localhost:8080/api/views/f7871213-03ef-48f1-bf27-372c7516411a/cached-data', {
       headers: {
         'Authorization': `Bearer c94ebcda-d9ba-4e29-a755-b2dd55d48774`

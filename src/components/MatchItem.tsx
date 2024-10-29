@@ -11,7 +11,13 @@ const MatchItem: React.FC<{match: Match}> = ({ match }) => {
   return (
     <div className="matchItem">
       <div className={`matchHead ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
-        <div color="blue">{match.championId}</div>
+        <div>{match.championName}</div>
+        <div className='icon-image'>
+          <img 
+            src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${match.championName}.png`}
+            alt={match.championName}
+          />
+        </div>
         <div color="blue">{match.individualPosition}</div>
         <div color={(kda === -1 || kda > 5) ? "green" : kda > 2 ? "orange" : "red"}>{match.kills+'/'+match.deaths+'/'+match.assists}</div>
         <div color={(kda === -1 || kda > 5) ? "green" : kda > 2 ? "orange" : "red"}>{match.kills+'/'+match.deaths+'/'+match.assists}</div>

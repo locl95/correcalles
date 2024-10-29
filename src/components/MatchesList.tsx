@@ -78,7 +78,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
           <div></div>
         </div>
         <div>
-          {sortedChampsPicked.slice(0,3).map((champ) => (
+          {sortedChampsPicked.slice(0,5).map((champ) => (
             <li key={champ.name}>
               <img className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
               <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}</span></div>
@@ -96,7 +96,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
       </div>
       {item.matches.map((match) => {
         return ( 
-          <MatchItem match={match} />
+          <MatchItem key={match.gameDuration} match={match} />
         )
       })}
     </div>

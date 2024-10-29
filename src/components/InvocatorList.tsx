@@ -8,7 +8,7 @@ const InvocatorList: React.FC<{data: Invocator[], type: string}> = ({ data, type
     <div className="InvocatorList"> 
       {data.map((invocator) => {
          return (
-          <InvocatorItem invocator={invocator} type={type} />
+          <InvocatorItem key={invocator.summonerName} invocator={invocator} type={type} />
          )
       })}
   </div>

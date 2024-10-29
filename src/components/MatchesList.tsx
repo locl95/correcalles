@@ -1,7 +1,7 @@
 import React from 'react';
 import { Ranked } from '../App'; 
 import MatchItem from './MatchItem';
-import { Flex, Progress, Tag } from 'antd';
+import { Progress } from 'antd';
 
 const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
 
@@ -80,7 +80,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
         <div>
           {sortedChampsPicked.slice(0,5).map((champ) => (
             <li key={champ.name}>
-              <img className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
+              <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
               <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}</span></div>
             </li>
           ))}
@@ -88,7 +88,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
         <div> 
           {sortedRolesPicked.map((role) => (
             <li className="role-item" key={role.role}>
-              <img className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>
+              <img alt="role-image" className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>
               <Progress size={[300, 15]} strokeColor={`#ff5c5ce0`} percent={(role.count)/num_matches*100} success={{ percent: role.wins/num_matches*100, strokeColor: '#00d927' }} />
             </li>
           ))}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Invocator } from '../App';
 import MatchesList from './MatchesList';
-import { Flex, Progress, Tag } from 'antd';
+import { Progress } from 'antd';
 
 const InvocatorItem: React.FC<{invocator: Invocator, type: string}> = ({ invocator, type }) => {
 
@@ -24,7 +24,7 @@ const InvocatorItem: React.FC<{invocator: Invocator, type: string}> = ({ invocat
         <Progress type="circle" size={60} percent={(Math.floor(type === `FLEX` ? invocator.leagues.RANKED_FLEX_SR.winrate * 100 : invocator.leagues.RANKED_SOLO_5x5.winrate * 100))} />
       </div>
       {visible && <div className="invocatorContent">
-        {type == `FLEX` ? <MatchesList item={invocator.leagues.RANKED_FLEX_SR} /> :
+        {type === `FLEX` ? <MatchesList item={invocator.leagues.RANKED_FLEX_SR} /> :
                                       <MatchesList item={invocator.leagues.RANKED_SOLO_5x5} />}
       </div>}
     </div>

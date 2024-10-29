@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Match } from '../App';
-import { Progress, Tag } from 'antd';
+import { Progress } from 'antd';
 
 const MatchItem: React.FC<{match: Match}> = ({ match }) => {
 

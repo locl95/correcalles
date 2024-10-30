@@ -2,6 +2,7 @@ import React from 'react';
 import { Ranked } from '../App'; 
 import MatchItem from './MatchItem';
 import { Progress } from 'antd';
+import { QuestionOutlined } from '@ant-design/icons';
 
 const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
 
@@ -11,12 +12,16 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
   var kills = 0;
   var deaths = 0;
   var assists = 0;
+  var tiltedpings = 0;
+  var max_tiltedpings = 0;
   
   for (var i=0; i<num_matches; ++i){
     if (item.matches[i].win) ++num_wins; else ++num_loses;
     kills += item.matches[i].kills;
     deaths += item.matches[i].deaths;
     assists += item.matches[i].assists;
+    max_tiltedpings = Math.max(max_tiltedpings, item.matches[i].enemyMissingPings);
+    tiltedpings += item.matches[i].enemyMissingPings;
   }
   const kda = deaths !== 0 ? (kills+assists)/deaths : 9999;
 
@@ -63,7 +68,6 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
     count: rolesPicked[role]?.count || 0,
     wins: rolesPicked[role]?.wins || 0
   }));
-  console.log(sortedRolesPicked);
 
   return (
     <div className="list"> 
@@ -75,6 +79,8 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
         <div className="col bigger-font">
           <div className='font-grey'>{kills/num_matches}/{deaths/num_matches}/{assists/num_matches}</div>
           <div className={`${kda<2 ? `font-red` : (kda<5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</div>
+          <div className={`${tiltedpings/num_matches<4 ? `font-green` : (tiltedpings/num_matches<10 ? `font-orange` : `font-red`)}`}>{(tiltedpings/num_matches).toFixed(2)} <QuestionOutlined className='font-orange'/></div>
+          <div className={`${max_tiltedpings<4 ? `font-green` : (max_tiltedpings<10 ? `font-orange` : `font-red`)}`}>màx. {max_tiltedpings} <QuestionOutlined className='font-orange'/></div>
         </div>
         <div className="col">
           {sortedChampsPicked.slice(0,5).map((champ) => (

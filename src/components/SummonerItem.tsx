@@ -10,7 +10,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string}> = ({ summoner, 
   return (
     <div className="row border-5-blue">
       <div className="headrow blue" onClick={() => setVisible(!visible)}>
-        <div className='col icon-image'>
+        <div className='col icon-image flex-start-lineal'>
           <img 
             src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/profileicon/${summoner.summonerIcon}.png`}
             alt='icon'

@@ -8,7 +8,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string}> = ({ summoner, 
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="row">
+    <div className="row border-5-blue">
       <div className="headrow blue" onClick={() => setVisible(!visible)}>
         <div className='col icon-image'>
           <img 

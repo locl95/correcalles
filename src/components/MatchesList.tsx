@@ -69,7 +69,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
       <div className="resume grey">
         <div className="col">
           <div>{num_matches}G {num_wins}V {num_loses}L</div>
-          <Progress type="circle" percent={(Math.floor(num_wins/num_matches*100))} />
+          <Progress strokeLinecap="butt" size={100} type="circle" percent={(Math.floor(num_wins/num_matches*100))} />
         </div>
         <div className="col">
           <div>{kills/num_matches}/{deaths/num_matches}/{assists/num_matches}</div>
@@ -78,7 +78,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
         </div>
         <div className="col">
           {sortedChampsPicked.slice(0,5).map((champ) => (
-            <li key={champ.name}>
+            <li className="flex-center-align" key={champ.name}>
               <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
               <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}</span></div>
             </li>
@@ -88,22 +88,18 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
           {sortedRolesPicked.map((role) => (
             <li className="role-item" key={role.role}>
               <img alt="role-image" className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>
-              <Progress size={[300, 15]} strokeColor={`#ff5c5ce0`} percent={(role.count)/num_matches*100} success={{ percent: role.wins/num_matches*100, strokeColor: '#00d927' }} />
+              <Progress strokeLinecap="butt" size={[240, 15]} strokeColor={`#b30000`} percent={(role.count)/num_matches*100} success={{ percent: role.wins/num_matches*100, strokeColor: '#00b120' }} showInfo={false} />
             </li>
           ))}
         </div>
       </div>
-      <div className="headrow turkish"> 
-        <div className="col">Champion</div>
-        <div className="col">Role</div>
-        <div className="col">KDA</div>
-        <div className="col">KDA</div>
+      <div className="matches-box"> 
+        {item.matches.map((match) => {
+          return ( 
+            <MatchItem key={match.gameDuration} match={match} />
+          )
+        })}
       </div>
-      {item.matches.map((match) => {
-        return ( 
-          <MatchItem key={match.gameDuration} match={match} />
-        )
-      })}
     </div>
   );
 }

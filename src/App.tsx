@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
-import InvocatorList from './components/InvocatorList';
+import SummonerList from './components/SummonerList';
 import axios from 'axios';
 import { Tabs } from 'antd';
 import {useParams} from "react-router-dom";
@@ -33,7 +33,7 @@ export interface Ranked {
   winrate: number;
 }
 
-export interface Invocator {
+export interface Summoner {
   leagues: {
     RANKED_FLEX_SR: Ranked,
     RANKED_SOLO_5x5: Ranked
@@ -79,7 +79,7 @@ function App() {
             return {
               label: type,
               key: id,
-              children: <InvocatorList data={data} type={type} />
+              children: <SummonerList data={data} type={type} />
             };
         })}
       />

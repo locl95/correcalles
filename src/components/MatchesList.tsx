@@ -65,19 +65,18 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
   console.log(sortedRolesPicked);
 
   return (
-    <div className="MatchesList"> 
-      <div className="matchesResume">
-        <div>Last {num_matches} games </div>
-        <div>
+    <div className="list"> 
+      <div className="resume grey">
+        <div className="col">
           <div>{num_matches}G {num_wins}V {num_loses}L</div>
           <Progress type="circle" percent={(Math.floor(num_wins/num_matches*100))} />
         </div>
-        <div>
+        <div className="col">
           <div>{kills/num_matches}/{deaths/num_matches}/{assists/num_matches}</div>
           <div>{((kills+assists)/deaths).toFixed(2)}:1</div>
           <div></div>
         </div>
-        <div>
+        <div className="col">
           {sortedChampsPicked.slice(0,5).map((champ) => (
             <li key={champ.name}>
               <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
@@ -85,7 +84,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
             </li>
           ))}
         </div>
-        <div> 
+        <div className="col"> 
           {sortedRolesPicked.map((role) => (
             <li className="role-item" key={role.role}>
               <img alt="role-image" className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>
@@ -93,6 +92,12 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
             </li>
           ))}
         </div>
+      </div>
+      <div className="headrow turkish"> 
+        <div className="col">Champion</div>
+        <div className="col">Role</div>
+        <div className="col">KDA</div>
+        <div className="col">KDA</div>
       </div>
       {item.matches.map((match) => {
         return ( 

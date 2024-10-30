@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Match } from '../App';
 import { Progress } from 'antd';
+import { QuestionCircleOutlined, WarningOutlined, BulbOutlined } from '@ant-design/icons';
 
 const MatchItem: React.FC<{match: Match}> = ({ match }) => {
 
@@ -9,31 +10,23 @@ const MatchItem: React.FC<{match: Match}> = ({ match }) => {
   const kda = match.deaths !== 0 ? (match.kills+match.assists)/match.deaths : -1;
 
   return (
-    <div className="matchItem">
-      <div className={`matchHead ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
-        <div>{match.championName}</div>
-        <div className='icon-image'>
+    <div className="row">
+      <div className={`headrow ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
+        <div className='col icon-image'>
           <img 
             src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${match.championName}.png`}
             alt={match.championName}
-          />
+          /><span>{match.championName}</span>
         </div>
-        <div color="blue">{match.individualPosition}</div>
-        <div color={(kda === -1 || kda > 5) ? "green" : kda > 2 ? "orange" : "red"}>{match.kills+'/'+match.deaths+'/'+match.assists}</div>
-        <div color={(kda === -1 || kda > 5) ? "green" : kda > 2 ? "orange" : "red"}>{match.kills+'/'+match.deaths+'/'+match.assists}</div>
-        {kda === -1 ? <div color="green">Perfect KDA</div> : <div color="green">{Math.round(kda * 100) / 100}</div>}
+        <div className="col" color="blue">{match.individualPosition}</div>
+        <div className="col">{match.kills+'/'+match.deaths+'/'+match.assists}</div>
+        <div  className="col">{Math.round(kda * 100) / 100}</div>
       </div>
-      {visible && <div className="matchContent">
-        <div className="pings">
-          <div className="missing">
-            {match.enemyMissingPings} ???
-          </div>
-          <div className="assist">
-            {match.assistMePings} help
-          </div>
-        </div>
-        <div className="wards">{match.wardsPlaced}/{match.visionWardsBoughtInGame}</div>
-        <Progress strokeColor="grey" percent={Math.floor((match.totalTimeSpentDead/match.gameDuration)*100)} />
+      {visible && <div className="resume">
+        <div className="col"><QuestionCircleOutlined /> {match.enemyMissingPings}</div>
+        <div className="col"><WarningOutlined /> {match.assistMePings}</div>
+        <div className="col"><BulbOutlined /> {match.wardsPlaced}/{match.visionWardsBoughtInGame}</div>
+        <div className="col"><span>RIP TIME</span><Progress size={[50, 15]} className="col" type="circle" strokeColor="grey" percent={Math.floor((match.totalTimeSpentDead/match.gameDuration)*100)} /></div>
       </div>}
     </div>
   );

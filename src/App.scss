@@ -1,6 +1,7 @@
 .correcalles {
   max-width:1180px;
   margin:auto;
+  margin-bottom: 50px;
   .ant-tabs-nav {
     margin: 0px;
     .ant-tabs-tab-active {
@@ -11,63 +12,80 @@
       }
     }
   }
-  .invocatorItem, .matchItem {
-    border-bottom: 1px solid #ebebeb;
-    .invocatorHead, .matchHead, .matchesResume {
+  .headrow {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;             
+    padding: 10px;
+    cursor: pointer;
+    .col {
+      flex: 1;                       
+      text-align: center;  
+    }
+    .icon-image {
       display: flex;
-      justify-content: space-between;  
-      align-items: center;             
-      padding: 10px;
-      cursor: pointer;
-      div {
-        flex: 1;                       
-        text-align: center;  
-      }
-      .icon-image {
+      align-items: center;
+      justify-content: center;
+      img {
         max-width: 40px;
-        img {
-          width: 100%;
-          vertical-align: middle;
-        }
+        margin-right: 10px;
       }
-      .small-img {
+    }
+    .small-img {
+      width: 40px;
+    }
+  }
+  .resume {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;             
+    padding: 10px;
+    .col {
+      flex: 1;                       
+      text-align: center;  
+    }
+    .icon-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        max-width: 40px;
+        margin-right: 10px;
+      }
+    }
+    .small-img {
+      width: 40px;
+    }
+    .role-item {
+      display: flex;
+      img {
         width: 40px;
       }
-      .role-item {
-        display: flex;
-        img {
-          width: 40px;
-        }
-        .ant-progress {
-          padding-top: 12px;
-        }
+      .ant-progress {
+        padding-top: 12px;
       }
     }
-    .matchesResume {
-      background-color: #ebebeb;
-    }
-    .invocatorHead {
-      background-color: #e1e1ff;
-    }
-    .green {
-      background-color: #e8ffe8;
-    }
-    .red {
-      background-color: #ffdada;
-    }
-    .font-green {
-      color: #009500;
-    }
-    .font-red {
-      color: #b30000;
-    }
-    .matchContent {
-      padding: 10px;
-      background-color: #f4f4f4;
-  
-      .progress {
-        margin-top: 10px;
-      }
-    }
+  }
+  .blue {
+    background-color: #e1e1ff;
+  }
+  .grey {
+    background-color: #00000005;
+  }
+  .turkish {
+    background-color: #00acad2e;
+    cursor:inherit;
+  }
+  .green {
+    background-color: #e8ffe8;
+  }
+  .red {
+    background-color: #ffdada;
+  }
+  .font-green {
+    color: #009500;
+  }
+  .font-red {
+    color: #b30000;
   }
 }

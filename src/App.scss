@@ -16,6 +16,8 @@
     display: flex;
     align-items: center;             
     padding: 10px;
+    font-weight: bold;
+    color: #373737;
     cursor: pointer;
     .col {
       flex: 1;                       
@@ -119,6 +121,10 @@
   }
   .border-5-blue {
     border: 5px solid #e1e1ff;
-    margin-top: 5px;
+    margin-top: 2px;
+  }
+  .bigger-font {
+    font-weight: bold;
+    font-size: 1.3rem;
   }
 }

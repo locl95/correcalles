@@ -20,7 +20,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string}> = ({ summoner, 
                                   summoner.leagues.RANKED_SOLO_5x5.tier + ` ` + summoner.leagues.RANKED_SOLO_5x5.rank}</div>
         <div className="col">{type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.leaguePoints : summoner.leagues.RANKED_SOLO_5x5.leaguePoints}LP</div>
         <div className="col">{type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.gamesPlayed : summoner.leagues.RANKED_SOLO_5x5.gamesPlayed} games</div>
-        <Progress className="col" type="circle" size={60} percent={(Math.floor(type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.winrate * 100 : summoner.leagues.RANKED_SOLO_5x5.winrate * 100))} />
+        <Progress strokeColor="#00b120" strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.winrate * 100 : summoner.leagues.RANKED_SOLO_5x5.winrate * 100))} />
       </div>
       {visible && <div className="summonerContent">
         {type === `FLEX` ? <MatchesList item={summoner.leagues.RANKED_FLEX_SR} /> :

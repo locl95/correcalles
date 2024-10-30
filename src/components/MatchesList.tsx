@@ -18,6 +18,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
     deaths += item.matches[i].deaths;
     assists += item.matches[i].assists;
   }
+  const kda = deaths !== 0 ? (kills+assists)/deaths : 9999;
 
   const champsPicked = item.matches.reduce<{[key: string]: { count: number, wins: number, kills: number, assists: number, deaths: number}}>((acc, match) => {
     const name = match.championName;
@@ -69,18 +70,17 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
       <div className="resume grey">
         <div className="col">
           <div>{num_matches}G {num_wins}V {num_loses}L</div>
-          <Progress strokeLinecap="butt" size={100} type="circle" percent={(Math.floor(num_wins/num_matches*100))} />
+          <Progress strokeColor="#00b120" strokeLinecap="butt" size={100} type="circle" percent={(Math.floor(num_wins/num_matches*100))} />
         </div>
-        <div className="col">
-          <div>{kills/num_matches}/{deaths/num_matches}/{assists/num_matches}</div>
-          <div>{((kills+assists)/deaths).toFixed(2)}:1</div>
-          <div></div>
+        <div className="col bigger-font">
+          <div className='font-grey'>{kills/num_matches}/{deaths/num_matches}/{assists/num_matches}</div>
+          <div className={`${kda<2 ? `font-red` : (kda<5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</div>
         </div>
         <div className="col">
           {sortedChampsPicked.slice(0,5).map((champ) => (
             <li className="flex-center-align" key={champ.name}>
               <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
-              <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}</span></div>
+              <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}:1</span></div>
             </li>
           ))}
         </div>

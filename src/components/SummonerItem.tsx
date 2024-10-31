@@ -23,10 +23,10 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string}> = ({ summoner, 
         <div className="col">{type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.gamesPlayed : summoner.leagues.RANKED_SOLO_5x5.gamesPlayed} games</div>
         <Progress strokeColor="#00b120" strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.winrate * 100 : summoner.leagues.RANKED_SOLO_5x5.winrate * 100))} />
         <div className="icon-line">
-          <div className="icon-button" onClick={(e) => {
+          <div className="icon-button op-gg" onClick={(e) => {
             e.stopPropagation();
             window.open(`https://www.op.gg/summoners/euw/${summoner.summonerName}-EUW`, '_blank')}
-          }><LinkOutlined /></div>
+          }><img src={`/icons/op.jpeg`} /></div>
           {!visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretDownOutlined /></div>}
           {visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretUpOutlined /></div>}
         </div>

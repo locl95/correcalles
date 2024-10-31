@@ -96,9 +96,18 @@ html {
     right: 50px;
     display: flex;
     gap: 30px;
-  }
-  .icon-button {
-    font-size: 20px;
+    align-items: center;
+    .icon-button {
+      font-size: 20px;
+      &.op-gg{
+        width: 40px;
+        display: flex;
+        align-items: center;
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
   .ant-progress-text .ant-progress-text-end .ant-progress-text-outer {
     width: inherit!important;

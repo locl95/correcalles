@@ -51,15 +51,14 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
   return (
     <div className="list"> 
       <div className="headrow turkish"> 
-        <div className="col cursor-pointer" onClick={() => setSortby("summoner")}>Summoner {sortby === `summoner` && <CaretDownOutlined />}</div>
+        <div className="col cursor-pointer m-r-20" onClick={() => setSortby("summoner")}>Summoner {sortby === `summoner` && <CaretDownOutlined />}</div>
         <div className="col cursor-pointer" onClick={() => setSortby("tier")}>Rank {sortby === `tier` && <CaretDownOutlined />}</div>
-        <div className="col cursor-pointer" onClick={() => setSortby("tier")}>LP</div>
         <div className="col cursor-pointer" onClick={() => setSortby("games")}>Games {sortby === `games` && <CaretDownOutlined />}</div>
         <div className="col cursor-pointer" onClick={() => setSortby("winrate")}>Winrate {sortby === `winrate` && <CaretDownOutlined />}</div>
       </div>
-      {data.filter((summoner) => (type === `FLEX` && summoner.leagues.RANKED_FLEX_SR)||(type === `SOLO` && summoner.leagues.RANKED_SOLO_5x5)).sort(compare).map((summoner) => {
+      {data.filter((summoner) => (type === `FLEX` && summoner.leagues.RANKED_FLEX_SR)||(type === `SOLO` && summoner.leagues.RANKED_SOLO_5x5)).sort(compare).map((summoner, index) => {
          return (
-          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} />
+          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} ccRank={index+1}/>
          )
       })}
   </div>

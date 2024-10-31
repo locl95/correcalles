@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Summoner } from '../App';
 import MatchesList from './MatchesList';
 import { Progress } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, LinkOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
 const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number}> = ({ summoner, type, ccRank }) => {
 

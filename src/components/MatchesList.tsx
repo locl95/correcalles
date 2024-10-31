@@ -7,22 +7,14 @@ import { QuestionOutlined } from '@ant-design/icons';
 const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
 
   const num_matches = item.matches.length;
-  var num_wins = 0;
-  var num_loses = 0;
-  var kills = 0;
-  var deaths = 0;
-  var assists = 0;
-  var tiltedpings = 0;
-  var max_tiltedpings = 0;
-  
-  for (var i=0; i<num_matches; ++i){
-    if (item.matches[i].win) ++num_wins; else ++num_loses;
-    kills += item.matches[i].kills;
-    deaths += item.matches[i].deaths;
-    assists += item.matches[i].assists;
-    max_tiltedpings = Math.max(max_tiltedpings, item.matches[i].enemyMissingPings);
-    tiltedpings += item.matches[i].enemyMissingPings;
-  }
+  const num_wins = item.matches.filter(match => match.win).length;
+  const num_loses = num_matches - num_wins;
+  const kills = item.matches.reduce((sum, match) => sum + match.kills, 0);
+  const deaths = item.matches.reduce((sum, match) => sum + match.deaths, 0);
+  const assists = item.matches.reduce((sum, match) => sum + match.assists, 0);
+  const max_tiltedpings = Math.max(...item.matches.map(match => match.enemyMissingPings));
+  const tiltedpings = item.matches.reduce((sum, match) => sum + match.enemyMissingPings, 0);
+
   const kda = deaths !== 0 ? (kills+assists)/deaths : 9999;
 
   const champsPicked = item.matches.reduce<{[key: string]: { count: number, wins: number, kills: number, assists: number, deaths: number}}>((acc, match) => {
@@ -51,7 +43,7 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
     }))
     .sort((a, b) => b.count - a.count);
 
-  const roleOrder = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "SUPPORT"];
+  const roleOrder = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"];
 
   const rolesPicked = item.matches.reduce<{[key: string]: { count: number, wins: number } }>((acc, match) => {
     const role = match.individualPosition;
@@ -83,12 +75,14 @@ const MatchesList: React.FC<{item: Ranked}> = ({ item }) => {
           <div className={`${max_tiltedpings<4 ? `font-green` : (max_tiltedpings<10 ? `font-orange` : `font-red`)}`}>màx. {max_tiltedpings} <QuestionOutlined className='font-orange'/></div>
         </div>
         <div className="col">
-          {sortedChampsPicked.slice(0,5).map((champ) => (
-            <li className="flex-center-align" key={champ.name}>
-              <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
-              <div>{champ.wins/champ.count*100}% ({champ.wins}V {champ.count-champ.wins}L) <span className={((champ.kills+champ.assists)/champ.deaths)<3 ? `font-red` : `font-green`}>{((champ.kills+champ.assists)/champ.deaths).toFixed(2)}:1</span></div>
-            </li>
-          ))}
+          {sortedChampsPicked.slice(0,5).map((champ) => {
+            const kda = champ.deaths === 0 ? 9999 : (champ.kills + champ.assists) / champ.deaths;
+            return (
+              <li className="flex-center-align" key={champ.name}>
+                <img alt="champion-image" className="small-img" src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
+                <div>{(champ.wins/champ.count*100).toFixed(2)}% ({champ.wins}V {champ.count-champ.wins}L) <span className={`${kda<2 ? `font-red` : (kda<5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</span></div>
+              </li>
+          )})}
         </div>
         <div className="col"> 
           {sortedRolesPicked.map((role) => (

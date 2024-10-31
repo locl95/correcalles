@@ -23,13 +23,11 @@ html {
     color: #373737;
     cursor: pointer;
     .col {
-      flex: 1;                       
-      text-align: center;  
+      flex: 1;                  
     }
     .icon-image {
       display: flex;
       align-items: center;
-      justify-content: center;
       img {
         max-width: 40px;
         margin-right: 10px;
@@ -50,7 +48,6 @@ html {
     .icon-image {
       display: flex;
       align-items: center;
-      justify-content: center;
       img {
         max-width: 40px;
         margin-right: 10px;
@@ -94,6 +91,15 @@ html {
     object-fit: cover; 
     margin-right: 10px;
   }
+  .icon-line {
+    position: absolute;
+    right: 50px;
+    display: flex;
+    gap: 30px;
+  }
+  .icon-button {
+    font-size: 20px;
+  }
   .ant-progress-text .ant-progress-text-end .ant-progress-text-outer {
     width: inherit!important;
   }
@@ -105,6 +111,7 @@ html {
   }
   .turkish {
     background-color: #00acad2e;
+    border: 5px solid #00acad2e;
     cursor:inherit;
   }
   .green {
@@ -126,7 +133,7 @@ html {
     color: #7b7b7b;
   }
   .border-5-blue {
-    border: 5px solid #e1e1ff;
+    border: 5px solid #d4d4f5;
     margin-top: 2px;
   }
   .bigger-font {

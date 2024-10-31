@@ -47,7 +47,9 @@ html {
       img {
         max-width: 40px;
         margin-right: 10px;
-        border: 3px solid #d4d4f5;
+        &.summoner-icon{
+          border: 3px solid #d4d4f5;
+        }
       }
     }
     .small-img {

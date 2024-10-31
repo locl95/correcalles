@@ -18,7 +18,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
       <div className="headrow blue" onClick={() => setVisible(!visible)}>
         <div className='col small-col'>{ccRank}</div>
         <div className='col icon-image flex-start-lineal'>
-          <img 
+          <img className="summoner-icon"
             src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/profileicon/${summoner.summonerIcon}.png`}
             alt='icon'
           /><span>{summoner.summonerName}</span>

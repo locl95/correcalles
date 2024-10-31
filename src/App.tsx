@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.scss';
 import SummonerList from './components/SummonerList';
 import axios from 'axios';
-import { Tabs } from 'antd';
-import {useParams} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export interface Match {
   assistMePings: number;
@@ -46,7 +45,10 @@ export interface Summoner {
 
 function App() {
   const [data, setData] = useState([]);
-  const { viewId } = useParams()
+  const { viewId, viewType } = useParams();
+  const [type, setType] = useState(viewType ? viewType.toLocaleUpperCase() : `FLEX`);
+  const navigate = useNavigate();
+  
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/data`, {
       headers: {
@@ -62,28 +64,20 @@ function App() {
     });
   }, [viewId]);
 
-  const onChange = (key: string) => {
-    console.log(key);
+  const handleTabClick = (newType: string) => {
+    setType(newType);
+    navigate(`/${viewId}/${newType.toLowerCase()}`);
   };
-  
+
   return (
-    <div className="correcalles">
-      <h1 className="title">Correcalles.gg</h1>
-      <Tabs
-        tabPosition="top"
-        onChange={onChange}
-        type="card"
-        items={new Array(2).fill(null).map((_, i) => {
-            const id = String(i + 1);
-            const type = id === `1` ? `FLEX` :`SOLO`;
-            return {
-              label: type,
-              key: id,
-              children: <SummonerList data={data} type={type} />
-            };
-        })}
-      />
-    </div>
+      <div className="correcalles">
+        <h1 className="title">Correcalles.gg</h1>
+        <div className="tabs">
+          <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
+          <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
+        </div>
+          <SummonerList data={data} type={type} />
+      </div>
   );
 }
 

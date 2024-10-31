@@ -11,7 +11,15 @@ const root = ReactDOM.createRoot(
 
 const router = createBrowserRouter([
     {
-        path: "/:viewId",
+        path: "/:viewId/",
+        element: <App />,
+    },
+    {
+        path: "/:viewId/flex",
+        element: <App />,
+    },
+    {
+        path: "/:viewId/solo",
         element: <App />,
     }
 ]);

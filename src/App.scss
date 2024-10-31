@@ -47,6 +47,7 @@ html {
       img {
         max-width: 40px;
         margin-right: 10px;
+        border: 3px solid #d4d4f5;
       }
     }
     .small-img {
@@ -128,6 +129,14 @@ html {
   }
   .ant-progress-text .ant-progress-text-end .ant-progress-text-outer {
     width: inherit!important;
+  }
+  .progress-games {
+    span {
+      min-width: 25px;
+    }
+    .ant-progress {
+      padding-right:40px;
+    }
   }
   .blue {
     background-color: #e1e1ff;

@@ -4,7 +4,7 @@ import MatchesList from './MatchesList';
 import { Progress } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
-const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number}> = ({ summoner, type, ccRank }) => {
+const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, maxGames: number}> = ({ summoner, type, ccRank, maxGames }) => {
 
   const [visible, setVisible] = useState(false);
   const tier = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.tier : summoner.leagues.RANKED_SOLO_5x5.tier;
@@ -27,7 +27,9 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number}>
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
           <div className="tier">{tier + ` ` + rank + ` - ` + leaguePoints + ` LP`} </div>
           </div>
-        <div className="col">{gamesPlayed} games</div>
+        <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
+          <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />
+        </div>
         <Progress strokeColor="#00b120" strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(winrate * 100))} />
         <div className="icon-line">
           <div className="icon-button op-gg" onClick={(e) => {

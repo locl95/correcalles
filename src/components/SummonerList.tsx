@@ -59,6 +59,9 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
     }
   };
 
+  const filteredData = data.filter((summoner) => (type === `FLEX` && summoner.leagues.RANKED_FLEX_SR)||(type === `SOLO` && summoner.leagues.RANKED_SOLO_5x5)).sort(compare)
+  const maxGames = type === `FLEX` ? Math.max(...filteredData.map(summoner => summoner.leagues.RANKED_FLEX_SR.gamesPlayed)) : Math.max(...filteredData.map(summoner => summoner.leagues.RANKED_SOLO_5x5.gamesPlayed));
+
   return (
     <div className="list"> 
       <div className="headrow turkish"> 
@@ -67,12 +70,9 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>Games {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>Winrate {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>
-      {data
-        .filter((summoner) => (type === `FLEX` && summoner.leagues.RANKED_FLEX_SR)||(type === `SOLO` && summoner.leagues.RANKED_SOLO_5x5))
-        .sort(compare)
-        .map((summoner, index) => {
+      {filteredData.map((summoner, index) => {
          return (
-          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} ccRank={index+1}/>
+          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} ccRank={index+1} maxGames={maxGames} />
          )
       })}
   </div>

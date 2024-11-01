@@ -21,7 +21,7 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
         if (tierDiff !== 0) return mult * tierDiff;
         const rankDiff = divisions.indexOf(a.leagues.RANKED_FLEX_SR.rank) - divisions.indexOf(b.leagues.RANKED_FLEX_SR.rank);
         if (rankDiff !== 0) return mult * rankDiff;
-        return mult * (a.leagues.RANKED_FLEX_SR.leaguePoints - b.leagues.RANKED_FLEX_SR.leaguePoints)
+        return mult * (b.leagues.RANKED_FLEX_SR.leaguePoints - a.leagues.RANKED_FLEX_SR.leaguePoints)
       }
       else if (sortby === `games`) {
         return mult * (b.leagues.RANKED_FLEX_SR.gamesPlayed - a.leagues.RANKED_FLEX_SR.gamesPlayed)

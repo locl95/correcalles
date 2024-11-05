@@ -53,6 +53,7 @@ function App() {
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
+  const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -69,6 +70,16 @@ function App() {
     .catch(error => {
       console.error(error);
     });
+
+    axios.get("https://ddragon.leagueoflegends.com/api/versions.json")
+      .then(response => {
+          const lastVersionDdragon = response.data[0];
+          setLastVersion(lastVersionDdragon);
+      })
+      .catch(error => {
+          console.error("Error fetching ddragon version data:", error);
+      });
+
   }, [viewId]);
 
   const handleTabClick = (newType: string) => {
@@ -85,7 +96,7 @@ function App() {
           <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
           <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
         </div> }
-        {!loading && data && <SummonerList data={data} type={type} /> }
+        {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
       </div>
   );
 }

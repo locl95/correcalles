@@ -3,7 +3,7 @@ import { Summoner } from '../App';
 import SummonerItem from './SummonerItem';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
-const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }) => {
+const SummonerList: React.FC<{data: Summoner[], type: string, ddversion: string}> = ({ data, type, ddversion }) => {
   const [sortby, setSortby] = useState('tier');
   const [isAsc, setIsAsc] = useState(true);
 
@@ -79,7 +79,7 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
       </div>
       {filteredData.map((summoner, index) => {
          return (
-          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} ccRank={index+1} maxGames={maxGames} />
+          <SummonerItem key={summoner.summonerName} summoner={summoner} type={type} ccRank={index+1} maxGames={maxGames} ddversion={ddversion} />
          )
       })}
   </div>

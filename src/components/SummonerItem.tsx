@@ -4,7 +4,7 @@ import MatchesList from './MatchesList';
 import { Progress } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
-const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, maxGames: number}> = ({ summoner, type, ccRank, maxGames }) => {
+const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, maxGames: number, ddversion: string}> = ({ summoner, type, ccRank, maxGames, ddversion }) => {
 
   const [visible, setVisible] = useState(false);
   const tier = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.tier : summoner.leagues.RANKED_SOLO_5x5.tier;
@@ -19,7 +19,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
         <div className='col small-col'>{ccRank}</div>
         <div className='col icon-image flex-start-lineal'>
           <img className="summoner-icon"
-            src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/profileicon/${summoner.summonerIcon}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/profileicon/${summoner.summonerIcon}.png`}
             alt='icon'
           /><span>{summoner.summonerName}</span>
         </div>

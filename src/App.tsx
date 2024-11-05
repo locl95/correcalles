@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import { useTheme } from "./ThemeContext";
+import { Switch } from 'antd';
 
 export interface Match {
   assistMePings: number;
@@ -52,10 +54,25 @@ function App() {
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
+  const themeType = searchParams.get("theme");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
+  const { darkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    console.log("themeType:", themeType);
+    if (themeType) {
+      if (themeType === 'dark' && !darkMode) {
+        console.log("Setting theme to dark"); 
+        toggleTheme();
+      } else if (themeType === 'light' && darkMode) {
+        console.log("Setting theme to light");
+        toggleTheme();
+      }
+    }
+  }, [themeType, darkMode, toggleTheme]);
+
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/data`, {
       headers: {
@@ -68,6 +85,7 @@ function App() {
       console.log(response.data);
     })
     .catch(error => {
+      setLoading(false);
       console.error(error);
     });
 
@@ -79,25 +97,31 @@ function App() {
       .catch(error => {
           console.error("Error fetching ddragon version data:", error);
       });
-
   }, [viewId]);
 
   const handleTabClick = (newType: string) => {
     setType(newType);
-    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
+    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}&theme=${darkMode ? 'dark' : 'light'}`);
+  }; 
+  
+  const handleToggleTheme = () => {
+    toggleTheme();
+    console.log(`Navigating to: /${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
+    navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
   };
   
   return (
-      <div className="correcalles">
-        <h1 className="title">Correcalles.gg</h1>
-        {!data && <Error />}
-        {data && loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-        {!loading && <div className="tabs">
-          <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
-          <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-        </div> }
-        {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
-      </div>
+    <div className={`correcalles`} >
+      <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
+      <h1 className="title">Correcalles.gg</h1>
+      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+      {!data && !loading && <Error />}
+      {!loading && data && <div className="tabs">
+        <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
+        <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
+      </div> }
+      {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
+    </div>
   );
 }
 

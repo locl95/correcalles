@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
 import SummonerList from './components/SummonerList';
+import Error from './Error';
 import axios from 'axios';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 export interface Match {
   assistMePings: number;
@@ -44,9 +47,12 @@ export interface Summoner {
 }
 
 function App() {
-  const [data, setData] = useState([]);
-  const { viewId, viewType } = useParams();
-  const [type, setType] = useState(viewType ? viewType.toLocaleUpperCase() : `FLEX`);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  const { viewId } = useParams();
+  const [searchParams] = useSearchParams();
+  const queueType = searchParams.get("queue_type");
+  const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -57,6 +63,7 @@ function App() {
     })
     .then(response => {
       setData(response.data);
+      setLoading(false);
       console.log(response.data);
     })
     .catch(error => {
@@ -66,17 +73,19 @@ function App() {
 
   const handleTabClick = (newType: string) => {
     setType(newType);
-    navigate(`/${viewId}/${newType.toLowerCase()}`);
+    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
   };
-
+  
   return (
       <div className="correcalles">
         <h1 className="title">Correcalles.gg</h1>
-        <div className="tabs">
+        {!data && <Error />}
+        {data && loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+        {!loading && <div className="tabs">
           <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
           <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-        </div>
-          <SummonerList data={data} type={type} />
+        </div> }
+        {!loading && data && <SummonerList data={data} type={type} /> }
       </div>
   );
 }

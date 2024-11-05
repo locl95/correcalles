@@ -23,6 +23,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
             alt='icon'
           /><span>{summoner.summonerName}</span>
         </div>
+        <div className='col icon-image max-w-300'>{summoner.summonerLevel}</div>
         <div className="col col-tier">
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
           <div className="tier">{tier + ` ` + rank + ` - ` + leaguePoints + ` LP`} </div>

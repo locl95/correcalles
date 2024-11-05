@@ -16,6 +16,9 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
       if (sortby === `summoner`) {
         return mult * a.summonerName.localeCompare(b.summonerName);
       }
+      else if (sortby === `lvl`) {
+        return mult * (b.summonerLevel - a.summonerLevel);
+      }
       else if (sortby === `tier`) {
         const tierDiff = ranks.indexOf(a.leagues.RANKED_FLEX_SR.tier) - ranks.indexOf(b.leagues.RANKED_FLEX_SR.tier);
         if (tierDiff !== 0) return mult * tierDiff;
@@ -33,6 +36,9 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
     else {
       if (sortby === `summoner`) {
         return mult * a.summonerName.localeCompare(b.summonerName);
+      }
+      else if (sortby === `lvl`) {
+        return mult * (b.summonerLevel - a.summonerLevel);
       }
       else if (sortby === `tier`) {
         const tierDiff = ranks.indexOf(a.leagues.RANKED_SOLO_5x5.tier) - ranks.indexOf(b.leagues.RANKED_SOLO_5x5.tier);
@@ -66,6 +72,7 @@ const SummonerList: React.FC<{data: Summoner[], type: string}> = ({ data, type }
     <div className="list"> 
       <div className="headrow turkish"> 
         <div className="col cursor-pointer m-r-20" onClick={() => handleSort("summoner")}>Summoner {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer max-w-300" onClick={() => handleSort("lvl")}>Lvl {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("tier")}>Rank {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>Games {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>Winrate {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>

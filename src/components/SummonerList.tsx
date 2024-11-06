@@ -57,30 +57,22 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
       console.log("tierDifference:", tierDifference);
       console.log("rankDifference:", rankDifference);
   
-      // Case 1: Same Tier, Same Rank
       if (tierDifference === 0 && rankDifference === 0) {
         return item.ranked.leaguePoints - cachedSummoner.ranked.leaguePoints;
       }
   
-      // Case 2: Same Tier, Different Rank
       else if (tierDifference === 0) {
         if (rankDifference > 0) {
-          // If the item has a higher rank (i.e., lower rank index), return the LP of the higher rank
           return item.ranked.leaguePoints;
         } else {
-          // If the cached summoner is in a higher rank, return their LP
           return cachedSummoner.ranked.leaguePoints;
         }
       }
-  
-      // Case 3: Different Tiers
+
       else {
-        // Handle tier promotion logic. For instance, if item is promoted from Gold I to Platinum V, we reset LP to 0
         if (tierDifference === 1 && rankDifference === 0) {
-          // If moving up by a tier (for example, Gold I to Platinum V), LP is reset after promotion
           return cachedSummoner.ranked.leaguePoints + (100 - item.ranked.leaguePoints);
         }
-        // If not promoted within the same rank, return 0
         return 0;
       }
     };

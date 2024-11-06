@@ -35,7 +35,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
         <div className="icon-line">
           <div className="icon-button op-gg" onClick={(e) => {
             e.stopPropagation();
-            window.open(`https://www.op.gg/summoners/euw/${summoner.summonerName}-EUW`, '_blank')}
+            window.open(`https://www.op.gg/summoners/euw/${summoner.summonerName}-${summoner.summonerTag}`, '_blank')}
           }><img src={`/icons/op.jpeg`} alt="op.gg"/></div>
           {!visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretDownOutlined /></div>}
           {visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretUpOutlined /></div>}

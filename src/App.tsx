@@ -44,6 +44,7 @@ export interface Summoner {
   summonerIcon: number;
   summonerLevel: number;
   summonerName: string;
+  summonerTag: string;
   type: string;
 }
 
@@ -66,7 +67,7 @@ function App() {
       }
     })
     .then(response => {
-      setData(response.data);
+      setData(response.data.data);
       setLoading(false);
       console.log(response.data);
     })

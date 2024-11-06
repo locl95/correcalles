@@ -46,35 +46,7 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);
     const LPdiff = () => {
       if (!cachedSummoner) return 0;
-      const itemTierIndex = tiers.indexOf(item.ranked.tier);
-      const cachedTierIndex = tiers.indexOf(cachedSummoner.ranked.tier);
-      const itemRankIndex = ranks.indexOf(item.ranked.rank);
-      const cachedRankIndex = ranks.indexOf(cachedSummoner.ranked.rank);
-  
-      const tierDifference = itemTierIndex - cachedTierIndex;
-      const rankDifference = itemRankIndex - cachedRankIndex;
-  
-      console.log("tierDifference:", tierDifference);
-      console.log("rankDifference:", rankDifference);
-  
-      if (tierDifference === 0 && rankDifference === 0) {
-        return item.ranked.leaguePoints - cachedSummoner.ranked.leaguePoints;
-      }
-  
-      else if (tierDifference === 0) {
-        if (rankDifference > 0) {
-          return item.ranked.leaguePoints;
-        } else {
-          return cachedSummoner.ranked.leaguePoints;
-        }
-      }
-
-      else {
-        if (tierDifference === 1 && rankDifference === 0) {
-          return cachedSummoner.ranked.leaguePoints + (100 - item.ranked.leaguePoints);
-        }
-        return 0;
-      }
+      else return 0;
     };
     return {
       ...item,

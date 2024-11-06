@@ -93,6 +93,10 @@ html, body, #root, .page {
         .tier-img {
           width: 60px;
         }  
+        .LPdiff {
+          display: flex;
+          align-items: center;
+        }   
       }             
     }
     .small-col {
@@ -100,6 +104,9 @@ html, body, #root, .page {
     }
     .m-r-20 {
       margin-right: 20px;
+    }
+    .m-l-20 {
+      margin-left: 20px;
     }
     .icon-image {
       display: flex;
@@ -245,7 +252,18 @@ html, body, #root, .page {
     display: flex;
     justify-content: center;
   }
-  .max-w-300 {
-    max-width: 100px;
+  .anticon-fall {
+    font-size: 3rem;
+    color: #b30000;
+  }
+  .anticon-rise {
+    font-size: 3rem;
+    color: #00b120;
+  }
+  .max-w-100 {
+    max-width: 60px;
+  }
+  .min-w-300 {
+    min-width: 300px;
   }
 }

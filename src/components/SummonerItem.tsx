@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Summoner } from '../App';
+import { SimplifiedSummoner } from '../App';
 import MatchesList from './MatchesList';
 import { Progress } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, RiseOutlined, FallOutlined } from '@ant-design/icons';
 
-const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, maxGames: number, ddversion: string}> = ({ summoner, type, ccRank, maxGames, ddversion }) => {
+const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxGames: number, ddversion: string, LPdiff: number}> = ({ summoner, ccRank, maxGames, ddversion, LPdiff }) => {
 
   const [visible, setVisible] = useState(false);
-  const tier = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.tier : summoner.leagues.RANKED_SOLO_5x5.tier;
-  const rank = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.rank : summoner.leagues.RANKED_SOLO_5x5.rank;
-  const leaguePoints = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.leaguePoints : summoner.leagues.RANKED_SOLO_5x5.leaguePoints;
-  const gamesPlayed = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.gamesPlayed : summoner.leagues.RANKED_SOLO_5x5.gamesPlayed;
-  const winrate = type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR.winrate : summoner.leagues.RANKED_SOLO_5x5.winrate;
+  const tier = summoner.ranked.tier;
+  const rank = summoner.ranked.rank;
+  const leaguePoints = summoner.ranked.leaguePoints;
+  const gamesPlayed = summoner.ranked.gamesPlayed;
+  const winrate = summoner.ranked.winrate;
 
   return (
     <div className="row border-5-blue">
@@ -23,11 +23,13 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
             alt='icon'
           /><span>{summoner.summonerName}</span>
         </div>
-        <div className='col icon-image max-w-300'>{summoner.summonerLevel}</div>
-        <div className="col col-tier">
+        <div className='col icon-image max-w-100'>{summoner.summonerLevel}</div>
+        <div className="col col-tier min-w-300">
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
           <div className="tier">{tier + ` ` + rank + ` - ` + leaguePoints + ` LP`} </div>
-          </div>
+          <div className="LPdiff m-l-20">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
+                                    <span>{LPdiff === 0 ? `±` : (LPdiff > 0 ? `+` : `-`)}{LPdiff}</span></div>
+        </div>
         <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
           <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />
         </div>
@@ -42,8 +44,7 @@ const SummonerItem: React.FC<{summoner: Summoner, type: string, ccRank: number, 
         </div>
       </div>
       {visible && <div className="summonerContent">
-        {type === `FLEX` ? <MatchesList item={summoner.leagues.RANKED_FLEX_SR} /> :
-                                      <MatchesList item={summoner.leagues.RANKED_SOLO_5x5} />}
+        <MatchesList item={summoner.ranked} />
       </div>}
     </div>
   );

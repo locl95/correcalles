@@ -48,8 +48,19 @@ export interface Summoner {
   type: string;
 }
 
+export interface SimplifiedSummoner {
+  ranked: Ranked;
+  summonerIcon: number;
+  summonerLevel: number;
+  summonerName: string;
+  summonerTag: string;
+  type: string;
+}
+
 function App() {
+  const [viewName, setViewName] = useState('Unnamed view');
   const [data, setData] = useState();
+  const [cachedData, setCachedData] = useState();
   const [loading, setLoading] = useState(true);
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
@@ -67,12 +78,38 @@ function App() {
       }
     })
     .then(response => {
-      setData(response.data.data);
+      setViewName(response.data.viewName);
+      setData(response.data.data.map((summoner: Summoner) => ({
+        ranked: type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
+        summonerIcon: summoner.summonerIcon,
+        summonerLevel: summoner.summonerLevel,
+        summonerName: summoner.summonerName,
+        summonerTag: summoner.summonerTag,
+        type: summoner.type,
+      })));
       setLoading(false);
-      console.log(response.data);
     })
     .catch(error => {
       setLoading(false);
+      console.error(error);
+    });
+
+    axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/cached-data`, {
+      headers: {
+        'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
+      }
+    })
+    .then(response => {
+      setCachedData(response.data.data.map((summoner: Summoner) => ({
+        ranked: type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
+        summonerIcon: summoner.summonerIcon,
+        summonerLevel: summoner.summonerLevel,
+        summonerName: summoner.summonerName,
+        summonerTag: summoner.summonerTag,
+        type: summoner.type,
+      })));
+    })
+    .catch(error => {
       console.error(error);
     });
 
@@ -84,7 +121,7 @@ function App() {
       .catch(error => {
           console.error("Error fetching ddragon version data:", error);
       });
-  }, [viewId]);
+  }, [viewId, type]);
 
   const handleTabClick = (newType: string) => {
     setType(newType);
@@ -95,19 +132,26 @@ function App() {
     toggleTheme(!darkMode);
     navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
   };
+
+  console.log('----------- DATA -----------');
+  console.log(data);
+  console.log('----------- END  -----------');
+  console.log('----------- CACHED DATA -----------');
+  console.log(cachedData);
+  console.log('--------- END CACHED DATA ---------');
   
   return (
     <div className={`page ${darkMode ? "dark-theme" : ""}`} >
       <div className={`correcalles`} >
         <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-        <h1 className="title">Correcalles.gg</h1>
+        <h1 className="title">{viewName}</h1>
         {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
         {!data && !loading && <Error />}
         {!loading && data && <div className="tabs">
           <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
           <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
         </div> }
-        {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
+        {!loading && data && cachedData && <SummonerList data={data} cachedData={cachedData} ddversion={lastVersionDdragon} /> }
       </div>
     </div>
   );

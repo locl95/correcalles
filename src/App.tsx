@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import { useTheme } from "./ThemeContext";
 import { Switch } from 'antd';
 
 export interface Match {
@@ -57,21 +56,8 @@ function App() {
   const themeType = searchParams.get("theme");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
-  const { darkMode, toggleTheme } = useTheme();
+  const [darkMode, toggleTheme] = useState(themeType === "dark");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("themeType:", themeType);
-    if (themeType) {
-      if (themeType === 'dark' && !darkMode) {
-        console.log("Setting theme to dark"); 
-        toggleTheme();
-      } else if (themeType === 'light' && darkMode) {
-        console.log("Setting theme to light");
-        toggleTheme();
-      }
-    }
-  }, [themeType, darkMode, toggleTheme]);
 
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/data`, {
@@ -105,22 +91,23 @@ function App() {
   }; 
   
   const handleToggleTheme = () => {
-    toggleTheme();
-    console.log(`Navigating to: /${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
+    toggleTheme(!darkMode);
     navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
   };
   
   return (
-    <div className={`correcalles`} >
-      <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-      <h1 className="title">Correcalles.gg</h1>
-      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-      {!data && !loading && <Error />}
-      {!loading && data && <div className="tabs">
-        <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
-        <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-      </div> }
-      {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
+    <div className={`page ${darkMode ? "dark-theme" : ""}`} >
+      <div className={`correcalles`} >
+        <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
+        <h1 className="title">Correcalles.gg</h1>
+        {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+        {!data && !loading && <Error />}
+        {!loading && data && <div className="tabs">
+          <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
+          <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
+        </div> }
+        {!loading && data && <SummonerList data={data} type={type} ddversion={lastVersionDdragon} /> }
+      </div>
     </div>
   );
 }

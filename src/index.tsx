@@ -5,8 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
-import { ThemeProvider } from "./ThemeContext";
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -19,11 +17,9 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-    <ThemeProvider>
-        <React.StrictMode>
-            <RouterProvider router={router} />
-        </React.StrictMode>
-    </ThemeProvider>
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import { Switch } from 'antd';
 
 export interface Match {
   id: string;
@@ -65,10 +64,8 @@ function View() {
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
-  const themeType = searchParams.get("theme");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
-  const [darkMode, toggleTheme] = useState(themeType === "dark");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -124,32 +121,24 @@ function View() {
       .catch(error => {
           console.error("Error fetching ddragon version data:", error);
       });
-  }, [viewId, type]);
+  }, [viewId, type, navigate]);
 
   const handleTabClick = (newType: string) => {
     setType(newType);
-    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}&theme=${darkMode ? 'dark' : 'light'}`);
+    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
   }; 
-  
-  const handleToggleTheme = () => {
-    toggleTheme(!darkMode);
-    navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
-  };
   
   console.log(data);
 
   return (
-    <div className={`page ${darkMode ? "dark-theme" : ""}`} >
-      <div className={`correcalles`} >
-        <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-        <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
-        <div className="tabs">
-          <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
-          <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-        </div>
-        {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-        {!loading && data && <SummonerList data={data} cachedData={cachedData ? cachedData : data} ddversion={lastVersionDdragon} /> }
+    <div className={`page`} >
+      <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
+      <div className="tabs">
+        <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
+        <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
       </div>
+      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+      {!loading && data && <SummonerList data={data} cachedData={cachedData ? cachedData : data} ddversion={lastVersionDdragon} /> }
     </div>
   );
 }

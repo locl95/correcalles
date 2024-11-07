@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ViewsList from '../components/ViewsList';
 import axios from 'axios';
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { Switch } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 export interface View {
   characterIds: number[];
@@ -14,9 +13,6 @@ export interface View {
 }
 
 const Home = () => {
-  const [searchParams] = useSearchParams();
-  const themeType = searchParams.get("theme");
-  const [darkMode, toggleTheme] = useState(themeType === "dark");
   const [viewsList, setViewsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -37,20 +33,12 @@ const Home = () => {
     });
   }, [navigate]);
 
-  const handleToggleTheme = () => {
-    toggleTheme(!darkMode);
-    navigate(`/home?theme=${!darkMode ? 'dark' : 'light'}`);
-  };
-
   console.log(viewsList);
 
   return (
-    <div className={`page ${darkMode ? "dark-theme" : ""}`} >
-      <div className={`correcalles`} >
-        <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-        <h1 className="title">Correcalles.gg</h1>
-        <ViewsList list={viewsList} loading={loading} />
-      </div>
+    <div className={`page`} >
+      <h1 className="title">All views</h1>
+      <ViewsList list={viewsList} loading={loading} />
     </div>
   );
 }

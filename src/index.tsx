@@ -4,6 +4,7 @@ import './index.css';
 import './App.scss';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Header from './Header';
 import Home from './pages/Home';
 import View from './pages/View';
 import ErrorPage from './pages/ErrorPage';
@@ -14,22 +15,28 @@ const root = ReactDOM.createRoot(
 
 const router = createBrowserRouter([
   {
-    path: "/home",
-    element: <Home />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/:viewId/",
-    element: <View />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/error/",
-    element: <ErrorPage />,
-  },
-  {
-    path: "*", 
-    element: <Home />,
+    path: "/",
+    element: <Header />, 
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/:viewId/",
+        element: <View />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/error/",
+        element: <ErrorPage />,
+      },
+      {
+        path: "*", 
+        element: <Home />,
+      }
+    ],
   }
 ]);
 

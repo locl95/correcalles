@@ -31,7 +31,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         </div>
         <div className="col col-tier max-w-100">
           <div className="LPdiff">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
-                                    <span>{LPdiff === 0 ? `±` : (LPdiff > 0 ? `+` : ``)}{LPdiff}</span></div>
+                                    <span>{LPdiff > 0 ? `+` : ``}{LPdiff !== 0 && LPdiff}</span></div>
         </div>
         <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
           <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />

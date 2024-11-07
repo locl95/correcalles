@@ -56,10 +56,11 @@ export interface SimplifiedSummoner {
   summonerName: string;
   summonerTag: string;
   type: string;
+  LPdiff: number;
 }
 
 function App() {
-  const [viewName, setViewName] = useState('Unnamed view');
+  const [viewName, setViewName] = useState();
   const [data, setData] = useState();
   const [cachedData, setCachedData] = useState();
   const [loading, setLoading] = useState(true);
@@ -87,6 +88,7 @@ function App() {
         summonerName: summoner.summonerName,
         summonerTag: summoner.summonerTag,
         type: summoner.type,
+        LPdiff: 0,
       })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
       setLoading(false);
     })
@@ -108,6 +110,7 @@ function App() {
         summonerName: summoner.summonerName,
         summonerTag: summoner.summonerTag,
         type: summoner.type,
+        LPdiff: 0,
       })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
     })
     .catch(error => {
@@ -147,7 +150,7 @@ function App() {
     <div className={`page ${darkMode ? "dark-theme" : ""}`} >
       <div className={`correcalles`} >
         <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-        <h1 className="title">{viewName}</h1>
+        <h1 className="title">{viewName && viewName}</h1>
         {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
         {!data && !loading && <Error />}
         {!loading && data && <div className="tabs">

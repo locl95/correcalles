@@ -4,7 +4,7 @@ import MatchesList from './MatchesList';
 import { Progress } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, RiseOutlined, FallOutlined } from '@ant-design/icons';
 
-const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxGames: number, ddversion: string, LPdiff: number}> = ({ summoner, ccRank, maxGames, ddversion, LPdiff }) => {
+const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxGames: number, ddversion: string}> = ({ summoner, ccRank, maxGames, ddversion }) => {
 
   const [visible, setVisible] = useState(false);
   const tier = summoner.ranked.tier;
@@ -12,6 +12,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
   const leaguePoints = summoner.ranked.leaguePoints;
   const gamesPlayed = summoner.ranked.gamesPlayed;
   const winrate = summoner.ranked.winrate;
+  const LPdiff = summoner.LPdiff;
 
   return (
     <div className="row border-5-blue">

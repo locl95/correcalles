@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { SimplifiedSummoner } from '../App';
+import { SimplifiedSummoner } from '../pages/View';
 import SummonerItem from './SummonerItem';
 import { CaretDownOutlined, CaretUpOutlined, RiseOutlined } from '@ant-design/icons';
 
@@ -45,9 +45,8 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
       setIsAsc(true);  
     }
   };
-  console.log(data);
-  const newData = data.map((item) => {
-    console.log(item.summonerName);
+  
+  const dataWithLPdiff = data.map((item) => {
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);
     const totalLP = (ssumoner: SimplifiedSummoner) => {
       const tierIndex = tiers.indexOf(ssumoner.ranked.tier);
@@ -63,7 +62,7 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
       LPdiff: LPdiff()
     };
   });
-  const sortedData = newData.sort(compare);
+  const sortedData = dataWithLPdiff.sort(compare);
   const maxGames = Math.max(...sortedData.map(summoner => summoner.ranked.gamesPlayed));
 
   return (

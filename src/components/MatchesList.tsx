@@ -1,5 +1,5 @@
 import React from 'react';
-import {Ranked} from '../App';
+import {Ranked} from '../pages/View';
 import MatchItem from './MatchItem';
 import {Progress} from 'antd';
 import {QuestionOutlined} from '@ant-design/icons';

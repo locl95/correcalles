@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.scss';
-import SummonerList from './components/SummonerList';
-import Error from './Error';
+import SummonerList from '../components/SummonerList';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
@@ -59,8 +57,8 @@ export interface SimplifiedSummoner {
   LPdiff: number;
 }
 
-function App() {
-  const [viewName, setViewName] = useState();
+function View() {
+  const [viewName, setViewName] = useState('Unnamed View');
   const [data, setData] = useState();
   const [cachedData, setCachedData] = useState();
   const [loading, setLoading] = useState(true);
@@ -95,6 +93,7 @@ function App() {
     .catch(error => {
       setLoading(false);
       console.error(error);
+      navigate("/error");
     });
 
     axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/cached-data`, {
@@ -136,31 +135,23 @@ function App() {
     toggleTheme(!darkMode);
     navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
   };
-
-  console.log('---------------------------- START ----------------------------------');
-  console.log('----------- DATA -----------' + type);
-  console.log(data);
-  console.log('----------- END  -----------');
-  console.log('----------- CACHED DATA -----------' + type);
-  console.log(cachedData);
-  console.log('--------- END CACHED DATA ---------');
-  console.log('----------------------------- END ------------------------------------');
   
+  console.log(data);
+
   return (
     <div className={`page ${darkMode ? "dark-theme" : ""}`} >
       <div className={`correcalles`} >
         <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-        <h1 className="title">{viewName && viewName}</h1>
-        {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-        {!data && !loading && <Error />}
-        {!loading && data && <div className="tabs">
+        <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
+        <div className="tabs">
           <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
           <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-        </div> }
-        {!loading && data && cachedData && <SummonerList data={data} cachedData={cachedData} ddversion={lastVersionDdragon} /> }
+        </div>
+        {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+        {!loading && data && <SummonerList data={data} cachedData={cachedData ? cachedData : data} ddversion={lastVersionDdragon} /> }
       </div>
     </div>
   );
 }
 
-export default App;
+export default View;

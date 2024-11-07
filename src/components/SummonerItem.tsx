@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SimplifiedSummoner } from '../App';
+import { SimplifiedSummoner } from '../pages/View';
 import MatchesList from './MatchesList';
 import { Progress } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, RiseOutlined, FallOutlined } from '@ant-design/icons';
@@ -27,7 +27,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         <div className='col icon-image max-w-60'>{summoner.summonerLevel}</div>
         <div className="col col-tier min-w-300">
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
-          <div className="tier">{tier + ` ` + rank + ` - ` + leaguePoints + ` LP`} </div>
+          <div className="tier">{tier + ` ${tier !== 'GRANDMASTER' && tier !== 'MASTER' && tier !== 'CHALLENGER' && rank} - ` + leaguePoints + ` LP`} </div>
         </div>
         <div className="col col-tier max-w-100">
           <div className="LPdiff">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}

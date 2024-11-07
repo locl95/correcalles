@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Match } from '../App';
+import { Match } from '../pages/View';
 import { Progress } from 'antd';
 import { QuestionCircleOutlined, WarningOutlined, BulbOutlined } from '@ant-design/icons';
 

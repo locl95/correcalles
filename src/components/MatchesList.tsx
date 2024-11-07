@@ -112,7 +112,7 @@ const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
             <div className="matches-box">
                 {item.matches.map((match) => {
                     return (
-                        <MatchItem key={match.gameDuration} match={match}/>
+                        <MatchItem key={match.id} match={match}/>
                     )
                 })}
             </div>

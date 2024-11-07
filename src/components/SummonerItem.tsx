@@ -23,12 +23,14 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
             alt='icon'
           /><span>{summoner.summonerName}</span>
         </div>
-        <div className='col icon-image max-w-100'>{summoner.summonerLevel}</div>
+        <div className='col icon-image max-w-60'>{summoner.summonerLevel}</div>
         <div className="col col-tier min-w-300">
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
           <div className="tier">{tier + ` ` + rank + ` - ` + leaguePoints + ` LP`} </div>
-          <div className="LPdiff m-l-20">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
-                                    <span>{LPdiff === 0 ? `±` : (LPdiff > 0 ? `+` : `-`)}{LPdiff}</span></div>
+        </div>
+        <div className="col col-tier max-w-100">
+          <div className="LPdiff">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
+                                    <span>{LPdiff === 0 ? `±` : (LPdiff > 0 ? `+` : ``)}{LPdiff}</span></div>
         </div>
         <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
           <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />

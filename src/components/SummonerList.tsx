@@ -8,7 +8,8 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
   const [isAsc, setIsAsc] = useState(true);
 
   const tiers = ["CHALLENGER", "GRANDMASTER", "MASTER", "DIAMOND", "EMERALD", "PLATINUM", "GOLD", "SILVER", "BRONZE", "IRON", "UNRANKED"];
-  const ranks = ["I", "II", "III", "IV", "V"];
+  const ranks = ["I", "II", "III", "IV"];
+  const maxPoints = 100;
 
   const compare = (a: SimplifiedSummoner, b: SimplifiedSummoner) => {
     const mult = isAsc ? 1 : -1;
@@ -41,12 +42,18 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
       setIsAsc(true);  
     }
   };
-
-  const newData = data.filter((summoner) => summoner.ranked).map((item) => {
+  console.log(data);
+  const newData = data.map((item) => {
+    console.log(item.summonerName);
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);
+    const totalLP = (ssumoner: SimplifiedSummoner) => {
+      const tierIndex = tiers.indexOf(ssumoner.ranked.tier);
+      const rankIndex = ranks.indexOf(ssumoner.ranked.rank);
+      return (tiers.length - tierIndex -1) * (ranks.length * maxPoints) + (ranks.length - rankIndex -1) * maxPoints + ssumoner.ranked.leaguePoints;
+    };
     const LPdiff = () => {
       if (!cachedSummoner) return 0;
-      else return 0;
+      return totalLP(item) - totalLP(cachedSummoner);
     };
     return {
       ...item,
@@ -60,14 +67,15 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
     <div className="list"> 
       <div className="headrow turkish"> 
         <div className="col cursor-pointer m-r-20" onClick={() => handleSort("summoner")}>Summoner {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer max-w-100" onClick={() => handleSort("lvl")}>Lvl {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer max-w-60" onClick={() => handleSort("lvl")}>Lvl {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer min-w-300" onClick={() => handleSort("tier")}>Rank {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer max-w-100" onClick={() => handleSort("LPdiff")}>? {sortby === `LPdiff` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>Games {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>Winrate {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>
       {sortedData.map((summoner, index) => {
         return (
-          <SummonerItem key={summoner.summonerName} summoner={summoner} ccRank={index+1} maxGames={maxGames} ddversion={ddversion} LPdiff={summoner.LPdiff}  />
+          <SummonerItem key={summoner.summonerName+`#`+summoner.summonerTag} summoner={summoner} ccRank={index+1} maxGames={maxGames} ddversion={ddversion} LPdiff={summoner.LPdiff}  />
         )
       })}
   </div>

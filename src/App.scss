@@ -260,10 +260,13 @@ html, body, #root, .page {
     font-size: 3rem;
     color: #00b120;
   }
-  .max-w-100 {
+  .max-w-60 {
     max-width: 60px;
   }
+  .max-w-100 {
+    max-width: 100px;
+  }
   .min-w-300 {
-    min-width: 300px;
+    min-width: 250px;
   }
 }

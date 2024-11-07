@@ -9,6 +9,7 @@ import { Spin } from 'antd';
 import { Switch } from 'antd';
 
 export interface Match {
+  id: string;
   assistMePings: number;
   assists: number;
   championId: number;
@@ -86,7 +87,7 @@ function App() {
         summonerName: summoner.summonerName,
         summonerTag: summoner.summonerTag,
         type: summoner.type,
-      })));
+      })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
       setLoading(false);
     })
     .catch(error => {
@@ -107,7 +108,7 @@ function App() {
         summonerName: summoner.summonerName,
         summonerTag: summoner.summonerTag,
         type: summoner.type,
-      })));
+      })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
     })
     .catch(error => {
       console.error(error);
@@ -133,12 +134,14 @@ function App() {
     navigate(`/${viewId}?queue_type=${type.toLowerCase()}&theme=${!darkMode ? 'dark' : 'light'}`);
   };
 
-  console.log('----------- DATA -----------');
+  console.log('---------------------------- START ----------------------------------');
+  console.log('----------- DATA -----------' + type);
   console.log(data);
   console.log('----------- END  -----------');
-  console.log('----------- CACHED DATA -----------');
+  console.log('----------- CACHED DATA -----------' + type);
   console.log(cachedData);
   console.log('--------- END CACHED DATA ---------');
+  console.log('----------------------------- END ------------------------------------');
   
   return (
     <div className={`page ${darkMode ? "dark-theme" : ""}`} >

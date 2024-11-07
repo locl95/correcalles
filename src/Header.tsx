@@ -19,7 +19,7 @@ const Header: React.FC = () => {
       <header className="header-container">
         <div className='header-menu page-width '>
           <Switch className={`switch-dark`} checked={darkMode} onChange={handleToggleTheme} />
-          <h1 onClick={() => {navigate(`/home`)}}>Correcalles.gg</h1>
+          <h1 onClick={() => {navigate(`/`)}}>Correcalles.gg</h1>
         </div>
       </header>
       <main className="page-width">

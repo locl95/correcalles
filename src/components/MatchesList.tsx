@@ -4,7 +4,7 @@ import MatchItem from './MatchItem';
 import {Progress} from 'antd';
 import {QuestionOutlined} from '@ant-design/icons';
 
-const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
+const MatchesList: React.FC<{ item: Ranked, ddversion: string }> = ({item, ddversion}) => {
 
     const num_matches = item.matches.length;
     const num_wins = item.matches.filter(match => match.win).length;
@@ -14,6 +14,7 @@ const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
     const assists = item.matches.reduce((sum, match) => sum + match.assists, 0);
     const max_tiltedpings = Math.max(...item.matches.map(match => match.enemyMissingPings));
     const tiltedpings = item.matches.reduce((sum, match) => sum + match.enemyMissingPings, 0);
+    const winrate = (Math.floor(num_wins / num_matches * 100))
 
     const kda = deaths !== 0 ? (kills + assists) / deaths : 9999;
 
@@ -67,8 +68,8 @@ const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
             <div className="resume grey">
                 <div className="col">
                     <div>{num_matches}G {num_wins}V {num_loses}L</div>
-                    <Progress strokeColor="#00b120" strokeLinecap="butt" size={100} type="circle"
-                              percent={(Math.floor(num_wins / num_matches * 100))}/>
+                    <Progress strokeColor={winrate<50 ? "#a30006" : "#029e2b"} strokeLinecap="butt" size={100} type="circle"
+                              percent={winrate}/>
                 </div>
                 <div className="col bigger-font">
                     <div
@@ -88,7 +89,7 @@ const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
                         return (
                             <li className="flex-center-align" key={champ.name}>
                                 <img alt="champion-image" className="small-img"
-                                     src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${champ.name}.png`}/>
+                                     src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${champ.name}.png`}/>
                                 <div>{(champ.wins / champ.count * 100).toFixed(2)}%
                                     ({champ.wins}V {champ.count - champ.wins}L) <span
                                         className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</span>
@@ -112,7 +113,7 @@ const MatchesList: React.FC<{ item: Ranked }> = ({item}) => {
             <div className="matches-box">
                 {item.matches.map((match) => {
                     return (
-                        <MatchItem key={match.id} match={match}/>
+                        <MatchItem key={match.id} match={match} ddversion={ddversion} />
                     )
                 })}
             </div>

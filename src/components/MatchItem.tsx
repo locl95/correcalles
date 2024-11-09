@@ -3,7 +3,7 @@ import { Match } from '../pages/View';
 import { Progress } from 'antd';
 import { QuestionCircleOutlined, WarningOutlined, BulbOutlined } from '@ant-design/icons';
 
-const MatchItem: React.FC<{match: Match}> = ({ match }) => {
+const MatchItem: React.FC<{match: Match, ddversion: string}> = ({ match, ddversion }) => {
 
   const [visible, setVisible] = useState(false);
 
@@ -14,7 +14,7 @@ const MatchItem: React.FC<{match: Match}> = ({ match }) => {
       <div className={`headrow ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
         <div className='col icon-image'>
           <img className='small-img'
-            src={`https://ddragon.leagueoflegends.com/cdn/14.11.1/img/champion/${match.championName}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${match.championName}.png`}
             alt={match.championName}
           />
         </div>

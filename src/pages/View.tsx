@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import SummonerList from '../components/SummonerList';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
@@ -58,8 +58,8 @@ export interface SimplifiedSummoner {
 
 function View() {
   const [viewName, setViewName] = useState('Unnamed View');
-  const [data, setData] = useState();
-  const [cachedData, setCachedData] = useState();
+  const [data, setData] = useState<Summoner[]>([]);
+  const [cachedData, setCachedData] = useState<Summoner[]>([]);
   const [loading, setLoading] = useState(true);
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
@@ -69,59 +69,51 @@ function View() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/data`, {
-      headers: {
-        'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
-      }
-    })
-    .then(response => {
-      setViewName(response.data.viewName);
-      setData(response.data.data.map((summoner: Summoner) => ({
-        ranked: type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
-        summonerIcon: summoner.summonerIcon,
-        summonerLevel: summoner.summonerLevel,
-        summonerName: summoner.summonerName,
-        summonerTag: summoner.summonerTag,
-        type: summoner.type,
-        LPdiff: 0,
-      })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
-      setLoading(false);
-    })
-    .catch(error => {
-      setLoading(false);
-      console.error(error);
-      navigate("/error");
-    });
+    const fetchData = async ()  => {
+      try {
+        const [viewResponse, cachedResponse, ddragonResponse] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/data`, {
+            headers: { Authorization: `Bearer ${process.env.REACT_APP_SERVICE_TOKEN}` }
+          }),
+          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/cached-data`, {
+            headers: { Authorization: `Bearer ${process.env.REACT_APP_SERVICE_TOKEN}` }
+          }),
+          axios.get('https://ddragon.leagueoflegends.com/api/versions.json')
+        ]);
 
-    axios.get(process.env.REACT_APP_API_HOST + `/api/views/${viewId}/cached-data`, {
-      headers: {
-        'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
+        setViewName(viewResponse.data.viewName);
+        setData(viewResponse.data.data);
+        setCachedData(cachedResponse.data.data);
+        setLastVersion(ddragonResponse.data[0]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        navigate('/error');
+      } finally {
+        setLoading(false);
       }
-    })
-    .then(response => {
-      setCachedData(response.data.data.map((summoner: Summoner) => ({
-        ranked: type === `FLEX` ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
-        summonerIcon: summoner.summonerIcon,
-        summonerLevel: summoner.summonerLevel,
-        summonerName: summoner.summonerName,
-        summonerTag: summoner.summonerTag,
-        type: summoner.type,
-        LPdiff: 0,
-      })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked));
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    };
+    fetchData();
+  }, [viewId, navigate]);
 
-    axios.get("https://ddragon.leagueoflegends.com/api/versions.json")
-      .then(response => {
-          const lastVersionDdragon = response.data[0];
-          setLastVersion(lastVersionDdragon);
-      })
-      .catch(error => {
-          console.error("Error fetching ddragon version data:", error);
-      });
-  }, [viewId, type, navigate]);
+  const simplifiedData = useMemo(() => data.map((summoner: Summoner) => ({
+    ranked: type === 'FLEX' ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
+    summonerIcon: summoner.summonerIcon,
+    summonerLevel: summoner.summonerLevel,
+    summonerName: summoner.summonerName,
+    summonerTag: summoner.summonerTag,
+    type: summoner.type,
+    LPdiff: 0,
+  })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked), [data, type]);
+
+  const simplifiedCachedData = useMemo(() => cachedData.map((summoner: Summoner) => ({
+    ranked: type === 'FLEX' ? summoner.leagues.RANKED_FLEX_SR : summoner.leagues.RANKED_SOLO_5x5,
+    summonerIcon: summoner.summonerIcon,
+    summonerLevel: summoner.summonerLevel,
+    summonerName: summoner.summonerName,
+    summonerTag: summoner.summonerTag,
+    type: summoner.type,
+    LPdiff: 0,
+  })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked), [cachedData, type]);
 
   const handleTabClick = (newType: string) => {
     setType(newType);
@@ -138,7 +130,7 @@ function View() {
         <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
       </div>
       {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-      {!loading && data && <SummonerList data={data} cachedData={cachedData ? cachedData : data} ddversion={lastVersionDdragon} /> }
+      {!loading && <SummonerList data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
     </div>
   );
 }

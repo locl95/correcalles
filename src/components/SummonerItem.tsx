@@ -27,7 +27,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         <div className='col icon-image max-w-60'>{summoner.summonerLevel}</div>
         <div className="col col-tier min-w-300">
           <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
-          <div className="tier">{tier + ` ${tier !== 'GRANDMASTER' && tier !== 'MASTER' && tier !== 'CHALLENGER' && rank} - ` + leaguePoints + ` LP`} </div>
+          <div className="tier">{tier + ` ${(tier === 'GRANDMASTER' || tier === 'MASTER' || tier === 'CHALLENGER') ? '' : rank} - ` + leaguePoints + ` LP`} </div>
         </div>
         <div className="col col-tier max-w-100">
           <div className="LPdiff">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
@@ -36,7 +36,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
           <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />
         </div>
-        <Progress strokeColor={winrate<0.5 ? "#b30000" : "#00b120"} strokeWidth={15} strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(winrate * 100))} />
+        <Progress strokeColor={winrate<0.5 ? "#a30006" : "#029e2b"} strokeWidth={15} strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(winrate * 100))} />
         <div className="icon-line">
           <div className="icon-button op-gg" onClick={(e) => {
             e.stopPropagation();
@@ -47,7 +47,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         </div>
       </div>
       {visible && <div className="summonerContent">
-        <MatchesList item={summoner.ranked} />
+        <MatchesList item={summoner.ranked} ddversion={ddversion} />
       </div>}
     </div>
   );

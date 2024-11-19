@@ -10,30 +10,22 @@ const MatchItem: React.FC<{match: Match, ddversion: string}> = ({ match, ddversi
   const kda = match.deaths !== 0 ? (match.kills+match.assists)/match.deaths : 9999;
 
   return (
-    <div className="row">
-      <div className={`headrow ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
-        <div className='col icon-image'>
-          <img className='small-img'
-            src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${match.championName}.png`}
-            alt={match.championName}
-          />
-        </div>
-        <div className="col icon-image">
-          <img className='small-img'
-            src={`/icons/${match.individualPosition.toLocaleLowerCase()}.svg`}
-            alt={match.individualPosition}
-          />
-          
-        </div>
-        <div className="col font-grey">{match.kills+'/'+match.deaths+'/'+match.assists}</div>
-        <div className={`col ${kda<2 ? `font-red` : (kda<5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect` : kda.toFixed(2) + `:1`}</div>
+    <div className={`match-item ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
+      <div className='col icon-image'>
+        <img className='small-img'
+          src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${match.championName}.png`}
+          alt={match.championName}
+        />
       </div>
-      {visible && <div className="resume grey">
-        <div className="col"><QuestionCircleOutlined /> {match.enemyMissingPings}</div>
-        <div className="col"><WarningOutlined /> {match.assistMePings}</div>
-        <div className="col"><BulbOutlined /> {match.wardsPlaced}/{match.visionWardsBoughtInGame}</div>
-        <div className="col"><span>RIP TIME</span><Progress size={[50, 15]} className="col" type="circle" strokeColor="grey" percent={Math.floor((match.totalTimeSpentDead/match.gameDuration)*100)} /></div>
-      </div>}
+      <div className="col icon-image">
+        <img className='small-img'
+          src={`/icons/${match.individualPosition.toLocaleLowerCase()}.svg`}
+          alt={match.individualPosition}
+        />
+        
+      </div>
+      <div className="col font-grey">{match.kills+'/'+match.deaths+'/'+match.assists}</div>
+      <div className={`col ${kda<2 ? `font-red` : (kda<5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect` : kda.toFixed(2) + `:1`}</div>
     </div>
   );
 }

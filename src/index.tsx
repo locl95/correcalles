@@ -4,7 +4,7 @@ import './styles/index.css';
 import './styles/main.scss';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import Header from './Header';
+import Layout from './Layout';
 import Home from './pages/Home';
 import View from './pages/View';
 import ErrorPage from './pages/ErrorPage';
@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />, 
+    element: <Layout />, 
     children: [
       {
         path: "/",

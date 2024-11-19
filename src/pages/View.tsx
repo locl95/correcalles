@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import SummonerList from '../components/SummonerList';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
 
 export interface Match {
   id: string;
@@ -123,14 +121,13 @@ function View() {
   console.log(data);
 
   return (
-    <div className={`page`} >
+    <div className={`content`} >
       <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
       <div className="tabs">
         <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
         <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
       </div>
-      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-      {!loading && <SummonerList data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
+      {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
     </div>
   );
 }

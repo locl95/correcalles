@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SimplifiedSummoner } from '../pages/View';
-import MatchesList from './MatchesList';
+import SummonerContent from './SummonerContent';
 import { Progress } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, RiseOutlined, FallOutlined } from '@ant-design/icons';
 
@@ -15,9 +15,9 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
   const LPdiff = summoner.LPdiff;
 
   return (
-    <div className="row border-5-blue">
-      <div className="headrow blue" onClick={() => setVisible(!visible)}>
-        <div className='col small-col'>{ccRank}</div>
+    <li className="list-item border-5-blue">
+      <div className="row bg-blue clickable" onClick={() => setVisible(!visible)}>
+        <div className='col max-w-20'>{ccRank}</div>
         <div className='col icon-image flex-start-lineal'>
           <img className="summoner-icon"
             src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/profileicon/${summoner.summonerIcon}.png`}
@@ -46,10 +46,10 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
           {visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretUpOutlined /></div>}
         </div>
       </div>
-      {visible && <div className="summonerContent">
-        <MatchesList item={summoner.ranked} ddversion={ddversion} />
-      </div>}
-    </div>
+      {visible && 
+        <SummonerContent item={summoner.ranked} ddversion={ddversion} />
+      }
+    </li>
   );
 }
 

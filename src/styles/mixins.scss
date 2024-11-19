@@ -1,0 +1,18 @@
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-center-align {
+  display: flex;
+  align-items: center;  
+  margin: 5px;    
+}
+.flex-start-lineal {    
+  justify-content: flex-start !important; 
+}

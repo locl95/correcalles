@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import { SimplifiedSummoner } from '../pages/View';
 import SummonerItem from './SummonerItem';
 import { CaretDownOutlined, CaretUpOutlined, RiseOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
-const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string}> = ({ data, cachedData, ddversion }) => {
+const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string}> = ({ loading, data, cachedData, ddversion }) => {
   const [sortby, setSortby] = useState('tier');
   const [isAsc, setIsAsc] = useState(true);
 
@@ -66,21 +68,22 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
   const maxGames = Math.max(...sortedData.map(summoner => summoner.ranked.gamesPlayed));
 
   return (
-    <div className="list"> 
-      <div className="headrow turkish"> 
-        <div className="col cursor-pointer m-r-20" onClick={() => handleSort("summoner")}>Summoner {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+    <ul className="list"> 
+      <div className="row turkish"> 
+        <div className="col cursor-pointer mr-20" onClick={() => handleSort("summoner")}>Summoner {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer max-w-60" onClick={() => handleSort("lvl")}>Lvl {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer min-w-300" onClick={() => handleSort("tier")}>Rank {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer max-w-100" onClick={() => handleSort("LPdiff")}><RiseOutlined className="small-rise-up"/> {sortby === `LPdiff` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>Games {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>Winrate {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>
-      {sortedData.map((summoner, index) => {
+      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
+      {!loading && sortedData.map((summoner, index) => {
         return (
           <SummonerItem key={summoner.summonerName+`#`+summoner.summonerTag} summoner={summoner} ccRank={index+1} maxGames={maxGames} ddversion={ddversion}  />
         )
       })}
-  </div>
+  </ul>
   );
 }
 

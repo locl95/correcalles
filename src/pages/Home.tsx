@@ -36,7 +36,7 @@ const Home = () => {
   console.log(viewsList);
 
   return (
-    <div className={`page`} >
+    <div className={`content`} >
       <h1 className="title">All views</h1>
       <ViewsList list={viewsList} loading={loading} />
     </div>

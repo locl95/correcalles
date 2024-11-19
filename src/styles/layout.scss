@@ -1,0 +1,110 @@
+// Variables per a breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+// Mixin per a media queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: #{$breakpoint-sm}) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: #{$breakpoint-md}) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: #{$breakpoint-lg}) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: #{$breakpoint-xl}) { @content; }
+  }
+}
+h1 {
+  margin: 0; //em fa troll el layout de react
+}
+html, body, #root, .correcalles {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.correcalles {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+.correcalles-width {
+  max-width: 1180px; 
+  width: 100%; 
+  margin: auto; 
+  position: relative;
+
+  @include respond-to('xl') {
+    max-width: 1180px; 
+  }
+
+  @include respond-to('lg') {
+    max-width: 992px; 
+  }
+
+  @include respond-to('md') {
+    max-width: 768px; 
+  }
+
+  @include respond-to('sm') {
+    max-width: 576px; 
+  }
+}
+.header-container {
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc; /* Línia separadora */
+  @include respond-to('sm') {
+    height: 70px; /* Ajust per a pantalles petites */
+  }
+}
+.header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    cursor: pointer;
+    color: inherit;
+
+    @include respond-to('sm') {
+      font-size: 1.2rem; 
+    }
+  }
+}
+.page {
+  flex: 1; 
+  padding-top: 20px;
+
+  @include respond-to('sm') {
+    padding-top: 15px; 
+  }
+}
+.footer-container {
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--fixed-white);
+
+  @include respond-to('sm') {
+    height: 70px; 
+  }
+}
+.footer-content {
+  text-align: center;
+
+  p {
+    color: var(--fixed-white);
+    margin: 0;
+    font-size: 0.9rem;
+
+    @include respond-to('sm') {
+      font-size: 0.8rem; 
+    }
+  }
+}

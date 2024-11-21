@@ -70,10 +70,10 @@ function View() {
     const fetchData = async ()  => {
       try {
         const [viewResponse, cachedResponse, ddragonResponse] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/data?game=lol`, {
+          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/data`, {
             headers: { Authorization: `Bearer ${process.env.REACT_APP_SERVICE_TOKEN}` }
           }),
-          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/cached-data?game=lol`, {
+          axios.get(`${process.env.REACT_APP_API_HOST}/api/views/${viewId}/cached-data`, {
             headers: { Authorization: `Bearer ${process.env.REACT_APP_SERVICE_TOKEN}` }
           }),
           axios.get('https://ddragon.leagueoflegends.com/api/versions.json')

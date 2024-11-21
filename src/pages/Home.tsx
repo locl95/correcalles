@@ -18,7 +18,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_HOST + `/api/views`, {
+    axios.get(process.env.REACT_APP_API_HOST + `/api/views?game=lol`, {
       headers: {
         'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
       }

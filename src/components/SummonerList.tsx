@@ -69,13 +69,13 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
 
   return (
     <ul className="list"> 
-      <div className="row turkish"> 
-        <div className="col cursor-pointer mr-20" onClick={() => handleSort("summoner")}>Summoner {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer max-w-60" onClick={() => handleSort("lvl")}>Lvl {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer min-w-300" onClick={() => handleSort("tier")}>Rank {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+      <div className="row hide-mobile"> 
+        <div className="col cursor-pointer mr-20" onClick={() => handleSort("summoner")}>SUMMONER {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer max-w-60" onClick={() => handleSort("lvl")}>LVL {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer min-w-300" onClick={() => handleSort("tier")}>RANK {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer max-w-100" onClick={() => handleSort("LPdiff")}><RiseOutlined className="small-rise-up"/> {sortby === `LPdiff` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer" onClick={() => handleSort("games")}>Games {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>Winrate {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer" onClick={() => handleSort("games")}>GAMES {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>WINRATE {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>
       {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
       {!loading && sortedData.map((summoner, index) => {

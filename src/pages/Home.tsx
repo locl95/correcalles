@@ -3,6 +3,10 @@ import ViewsList from '../components/ViewsList';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
+export interface ViewResponse {
+  records: View[];
+}
+
 export interface View {
   characterIds: number[];
   game: string;
@@ -18,13 +22,13 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_HOST + `/api/views?game=lol`, {
+    axios.get(process.env.REACT_APP_API_HOST + `/api/views?game=lol&featured=true`, {
       headers: {
         'Authorization': `Bearer ` + process.env.REACT_APP_SERVICE_TOKEN
       }
     })
     .then(response => {
-      setViewsList(response.data.filter((view: View) => view.published && view.game === 'LOL'));
+      setViewsList(response.data.records.filter((view: View) => view.published));
       setLoading(false);
     })
     .catch(error => {
@@ -32,8 +36,6 @@ const Home = () => {
       navigate("/error");
     });
   }, [navigate]);
-
-  console.log(viewsList);
 
   return (
     <div className={`content`} >

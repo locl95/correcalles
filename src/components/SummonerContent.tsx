@@ -65,25 +65,25 @@ const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, d
 
   return (
     <div className="summoner-content">
-      <div className="resume grey">
+      <div className="resume bg-light-black">
         <div className="col">
           <div>{num_matches}G {num_wins}V {num_loses}L</div>
           <Progress strokeColor={winrate<50 ? "#a30006" : "#029e2b"} strokeLinecap="butt" size={100} type="circle"
                     percent={winrate}/>
         </div>
-        <div className="col bigger-font">
+        {false && <div className="col bigger-font">
           <div className='font-grey'>{(kills / num_matches).toFixed(2)}/{(deaths / num_matches).toFixed(2)}/{(assists / num_matches).toFixed(2)}</div>
           <div className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</div>
           <div className={`${tiltedpings / num_matches < 4 ? `font-green` : (tiltedpings / num_matches < 10 ? `font-orange` : `font-red`)}`}>{(tiltedpings / num_matches).toFixed(2)}
               <QuestionOutlined className='font-orange'/></div>
           <div className={`${max_tiltedpings < 4 ? `font-green` : (max_tiltedpings < 10 ? `font-orange` : `font-red`)}`}>màx. {max_tiltedpings}
               <QuestionOutlined className='font-orange'/></div>
-        </div>
+        </div>}
         <div className="col">
           {sortedChampsPicked.slice(0, 5).map((champ) => {
             const kda = champ.deaths === 0 ? 9999 : (champ.kills + champ.assists) / champ.deaths;
             return (
-              <li className="flex-center-align" key={champ.name}>
+              <li className="champion-line flex-center-align" key={champ.name}>
                 <img alt="champion-image" className="small-img mr-10"
                       src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${champ.name}.png`}/>
                 <div>{(champ.wins / champ.count * 100).toFixed(2)}%
@@ -94,7 +94,7 @@ const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, d
             )
           })}
         </div>
-        <div className="col">
+        <div className="last-col col">
           {sortedRolesPicked.map((role) => (
             <li className="role-item" key={role.role}>
               <img alt="role-image" className="small-img" src={`/icons/${role.role.toLowerCase()}.svg`}/>

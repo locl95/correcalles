@@ -4,7 +4,7 @@ import { Switch } from 'antd';
 import { useNavigate } from "react-router-dom";
 
 const Layout: React.FC = () => {
-  const [darkMode, toggleTheme] = useState(false);
+  const [darkMode, toggleTheme] = useState(true);
   const navigate = useNavigate();
 
   const handleToggleTheme = () => {

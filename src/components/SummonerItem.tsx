@@ -15,8 +15,8 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
   const LPdiff = summoner.LPdiff;
 
   return (
-    <li className="list-item border-5-blue">
-      <div className="row bg-blue clickable" onClick={() => setVisible(!visible)}>
+    <li className="list-item">
+      <div className="row bg-light-black mt-5 clickable hide-mobile" onClick={() => setVisible(!visible)}>
         <div className='col max-w-20'>{ccRank}</div>
         <div className='col icon-image flex-start-lineal'>
           <img className="summoner-icon"
@@ -44,6 +44,24 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
           }><img src={`/icons/op.jpeg`} alt="op.gg"/></div>
           {!visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretDownOutlined /></div>}
           {visible && <div className="icon-button" onClick={() => setVisible(!visible)}><CaretUpOutlined /></div>}
+        </div>
+      </div>
+      <div className="row-mobile bg-light-black mt-5 show-mobile" onClick={() => setVisible(!visible)}>
+        <div className='col max-w-40'>{ccRank}</div>
+        <div className='col'>
+          <div className='col-line'>
+            <div className='summoner-icon'>
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/profileicon/${summoner.summonerIcon}.png`}
+                alt='icon'
+              /><span>{summoner.summonerName}</span>
+              </div>
+            <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
+          </div>
+          <div className="col-line">
+            <div className="tier">{tier + ` ${(tier === 'GRANDMASTER' || tier === 'MASTER' || tier === 'CHALLENGER') ? '' : rank} - ` + leaguePoints + ` LP`} </div>
+          </div>
+          <Progress strokeColor={winrate<0.5 ? "#a30006" : "#029e2b"} strokeWidth={15} strokeLinecap="butt" className="col" percent={(Math.floor(winrate * 100))} />
         </div>
       </div>
       {visible && 

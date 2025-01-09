@@ -51,11 +51,27 @@ html, body, #root, .correcalles {
     max-width: 576px; 
   }
 }
+.show-mobile {
+  display: none;
+}
+@include respond-to('md') {
+  .hide-mobile {
+    display: none!important;
+  }
+  .show-mobile {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .page, .header-container {
+    padding: 10px;
+  }
+}
 .header-container {
   min-height: 85px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ccc; /* Línia separadora */
   @include respond-to('sm') {
     height: 70px; /* Ajust per a pantalles petites */
   }
@@ -85,11 +101,10 @@ html, body, #root, .correcalles {
   }
 }
 .footer-container {
-  min-height: 85px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--fixed-white);
+  min-height: 40px;
 
   @include respond-to('sm') {
     height: 70px; 

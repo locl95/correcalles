@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import SummonerList from '../components/SummonerList';
+import Dropdown from '../small-components/Dropdown';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
@@ -113,20 +114,10 @@ function View() {
     LPdiff: 0,
   })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked), [cachedData, type]);
 
-  const handleTabClick = (newType: string) => {
-    setType(newType);
-    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
-  }; 
-  
-  console.log(data);
-
   return (
     <div className={`content`} >
       <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
-      <div className="tabs">
-        <div className={`tab-item ${type === `FLEX` && `active`}`} onClick={() => handleTabClick(`FLEX`)}>FLEX</div>
-        <div className={`tab-item ${type === `SOLO` && `active`}`}  onClick={() => handleTabClick(`SOLO`)}>SOLO</div>
-      </div>
+      <Dropdown defaultType={type} setType={setType} />
       {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
     </div>
   );

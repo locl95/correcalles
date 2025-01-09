@@ -129,6 +129,9 @@
     .small-img {
       width: 40px;
     }
+    .ant-progress-text {
+      color: var(--white);
+    }
   }
   .resume {
     @extend .flex-start;          
@@ -291,6 +294,9 @@
       .ant-progress-bg {
         height: 9px!important;
       }    
+      .ant-progress-text {
+        color: var(--white);
+      }
     }
   }
 }

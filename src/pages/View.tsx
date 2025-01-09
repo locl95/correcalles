@@ -114,10 +114,15 @@ function View() {
     LPdiff: 0,
   })).filter((ssummoner: SimplifiedSummoner) => ssummoner.ranked), [cachedData, type]);
 
+  const handleTabClick = (newType: string) => {
+    setType(newType);
+    navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
+  }; 
+
   return (
     <div className={`content`} >
       <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
-      <Dropdown defaultType={type} setType={setType} />
+      <Dropdown defaultType={type} setType={handleTabClick} />
       {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
     </div>
   );

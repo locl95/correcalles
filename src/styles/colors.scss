@@ -10,7 +10,9 @@
   --bg-turkish: #00acad1c;
   --border-turkish: #00acad2e;
   --green: #029e2b;
+  --border-green: #005516;
   --red: #a30006;
+  --border-red: #710004
   --blue: #02129e;
   --black: #000000;
   --white: #efefef;
@@ -53,11 +55,17 @@
   border: 5px solid var(--border-turkish);
   cursor:inherit;
 }
-.green {
+.old-green {
   background-color: #e8ffe8;
 }
-.red {
+.green {
+  background-color: #002d00;
+}
+.old-red {
   background-color: #ffdada;
+}
+.red {
+  background-color: #3f0200;
 }
 .font-green {
   color: #009500;
@@ -70,4 +78,7 @@
 }
 .font-grey {
   color: #7b7b7b;
+}
+.font-white {
+  color: var(--white);
 }

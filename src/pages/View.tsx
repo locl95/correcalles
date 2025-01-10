@@ -64,6 +64,7 @@ function View() {
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
+  const [position, setPosition] = useState('all');
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
   const navigate = useNavigate();
 
@@ -119,11 +120,27 @@ function View() {
     navigate(`/${viewId}?queue_type=${newType.toLowerCase()}`);
   }; 
 
+  const positions = [
+    { key: 'all', icon: 'ALL' },
+    { key: 'SOLO', icon: 'TOP' },
+    { key: 'NONE', icon: 'JUNGLE' },
+    { key: 'SOLO', icon: 'MID' },
+    { key: 'CARRY', icon: 'ADC' },
+    { key: 'SUPPORT', icon: 'SUPPORT' },
+  ];
+
   return (
     <div className={`content`} >
       <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
       <Dropdown defaultType={type} setType={handleTabClick} />
-      {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} /> }
+      <div className={"positions-icons"}>
+        {positions.map(({ key, icon }) => (
+          <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
+            <img src={`/icons/${icon}-${position === key ? 'light' : 'dark'}.png`} alt={icon} />
+          </div>
+        ))}
+      </div>
+      {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} position={position} /> }
     </div>
   );
 }

@@ -21,6 +21,8 @@
   --light-blue: #61afff;
   --fixed-white: #efefef;
   --light-grey: #414141;
+  --tw-bg-opacity: 1;
+  --light-black: rgb(24 26 32 / var(--tw-bg-opacity));
 }
 .dark-theme {
   --tw-bg-opacity: 1;
@@ -65,7 +67,7 @@
   background-color: #ffdada;
 }
 .red {
-  background-color: #3f0200;
+  background-color: #390200;
 }
 .font-green {
   color: #009500;

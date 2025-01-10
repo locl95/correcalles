@@ -5,7 +5,7 @@ import { CaretDownOutlined, CaretUpOutlined, RiseOutlined } from '@ant-design/ic
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
-const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string}> = ({ loading, data, cachedData, ddversion }) => {
+const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string, position: string}> = ({ loading, data, cachedData, ddversion, position }) => {
   const [sortby, setSortby] = useState('tier');
   const [isAsc, setIsAsc] = useState(true);
 
@@ -47,8 +47,11 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
       setIsAsc(true);  
     }
   };
-  
-  const dataWithLPdiff = data.map((item) => {
+  console.log(data);
+
+  const dataWithPosition = position === 'all' ? data : data.filter(item => item.ranked.mainRole === position);
+
+  const dataWithLPdiff = dataWithPosition.map((item) => {
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);
     const totalLP = (ssumoner: SimplifiedSummoner) => {
       const tierIndex = tiers.indexOf(ssumoner.ranked.tier);

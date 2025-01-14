@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Switch } from 'antd';
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Layout: React.FC = () => {
-  const [darkMode, toggleTheme] = useState(false);
+  const [darkMode, toggleTheme] = useState(JSON.parse(Cookies.get("darkMode") || "false"));
   const navigate = useNavigate();
 
   const handleToggleTheme = () => {
     toggleTheme(!darkMode);
+    Cookies.set("darkMode", (!darkMode).toString(), { expires: 365 });
   };
 
   return (

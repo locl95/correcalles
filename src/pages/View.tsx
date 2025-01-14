@@ -63,7 +63,7 @@ function View() {
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
-  const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `FLEX`);
+  const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `SOLO`);
   const [position, setPosition] = useState('all');
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
   const navigate = useNavigate();

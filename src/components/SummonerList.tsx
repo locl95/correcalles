@@ -57,10 +57,7 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
       const tierIndex = tiers.indexOf(ssumoner.ranked.tier);
 
       if (["MASTER", "GRANDMASTER", "CHALLENGER"].includes(ssumoner.ranked.tier)) {
-        console.log(ssumoner.ranked.tier + " " +(tiers.length - tiers.indexOf("MASTER") - 1) * ranks.length * maxPoints + ssumoner.ranked.leaguePoints);
-        return (
-          (tiers.length - tiers.indexOf("MASTER") - 1) * ranks.length * maxPoints + ssumoner.ranked.leaguePoints
-        );
+        return ((tiers.length - tiers.indexOf("MASTER") - 1) * ranks.length * maxPoints + ssumoner.ranked.leaguePoints);
       }
 
       const rankIndex = ranks.indexOf(ssumoner.ranked.rank);

@@ -85,7 +85,7 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
         <div className="col cursor-pointer mr-20" onClick={() => handleSort("summoner")}>SUMMONER {sortby === `summoner` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer max-w-60" onClick={() => handleSort("lvl")}>LVL {sortby === `lvl` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer min-w-300" onClick={() => handleSort("tier")}>RANK {sortby === `tier` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
-        <div className="col cursor-pointer max-w-100" onClick={() => handleSort("LPdiff")}><RiseOutlined className="small-rise-up"/> {sortby === `LPdiff` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
+        <div className="col cursor-pointer max-w-100" onClick={() => handleSort("LPdiff")}>STREAK {sortby === `LPdiff` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>GAMES {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>WINRATE {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>

@@ -104,10 +104,8 @@ html, body, #root, .correcalles {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
 
   @include respond-to('sm') {
-    height: 70px; 
   }
 }
 .footer-content {

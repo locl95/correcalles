@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { SimplifiedSummoner } from '../pages/View';
 import SummonerItem from './SummonerItem';
-import { CaretDownOutlined, CaretUpOutlined, RiseOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 

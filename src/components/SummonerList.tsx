@@ -55,6 +55,13 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);
     const totalLP = (ssumoner: SimplifiedSummoner) => {
       const tierIndex = tiers.indexOf(ssumoner.ranked.tier);
+
+      if (["MASTER", "GRANDMASTER", "CHALLENGER"].includes(ssumoner.ranked.tier)) {
+        return (
+          (tiers.length - tierIndex - 1) * ranks.length * maxPoints + ssumoner.ranked.leaguePoints
+        );
+      }
+
       const rankIndex = ranks.indexOf(ssumoner.ranked.rank);
       return (tiers.length - tierIndex -1) * (ranks.length * maxPoints) + (ranks.length - rankIndex -1) * maxPoints + ssumoner.ranked.leaguePoints;
     };

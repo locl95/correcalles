@@ -43,7 +43,7 @@
     border-radius: 5px;
     background-color: var(--light-black);
     border: inherit;
-    color: var(--white);
+    color: var(--text-color);
     font-weight: bold;
     font-size: 14px;
   }
@@ -58,7 +58,7 @@
     border-radius: 5px;
     background-color: var(--light-black);
     border: 0px;
-    color: var(--white);
+    color: var(--text-color);
     font-weight: bold;
     border:1px solid white;
     margin-top:5px;
@@ -98,7 +98,7 @@
   padding-inline-start: 0px;
   list-style-type: inherit;
   margin-block-start: 0px;
-  color: var(--white);
+  color: var(--text-color);
   font-weight: bold;
   .row {
     display: flex;
@@ -137,7 +137,7 @@
       width: 40px;
     }
     .ant-progress-text {
-      color: var(--white);
+      color: var(--text-color);
     }
   }
   .resume {
@@ -160,7 +160,7 @@
       border-right: 0px solid #ffffff45;
     }
     .ant-progress-text {
-      color: var(--white);
+      color: var(--text-color);
     }
     .icon-image {
       display: flex;
@@ -261,7 +261,7 @@
   padding-inline-start: 0px;
   list-style-type: inherit;
   margin-block-start: 0px;
-  color: var(--white);
+  color: var(--text-color);
   font-weight: bold;
   margin-top:10px;
   .row-mobile {
@@ -303,7 +303,7 @@
         height: 9px!important;
       }    
       .ant-progress-text {
-        color: var(--white);
+        color: var(--text-color);
       }
     }
   }

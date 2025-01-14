@@ -24,7 +24,22 @@ const Layout: React.FC = () => {
       </main>
       <footer className="footer-container">
         <div className='footer-content correcalles-width'> 
-          <p>© 2024</p>
+          <p className='kofi-button'>
+            <a
+                href="https://ko-fi.com/Q5Q815ZBU4"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition"
+            >
+                <img
+                    src="/icons/kofi.svg"
+                    alt="Buy Me a Coffee at ko-fi.com"
+                    className="h-5 w-5"
+                />
+                <span>Fuel up the squad with sushi</span>
+            </a>
+          </p>
+          <p className="right-deserved">© 2024</p>
         </div>
       </footer>
     </div>

@@ -4,7 +4,7 @@
 }
 //HEADER
 .header-container {
-  background-color: var(--light-grey);
+  background-color: var(--dark-blue);
   .header-menu {
     display: flex;
     align-items: center;
@@ -16,9 +16,42 @@
 }
 //FOOTER
 .footer-container {
-  background-color: var(--light-grey);
+  background-color: var(--dark-blue);
   p {
     margin:0px;
+  }
+  .footer-content {
+    padding-top:20px;
+  }
+  //KOFI BUTTON
+  .kofi-button{
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    --tw-bg-opacity: 1;
+    background-color: #ef4444;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
+    cursor: pointer;
+    color: var(--fixed-white);
+    border-radius: .5rem;
+    width: fit-content;
+    margin: auto;
+    a {
+      text-decoration: none;
+      color: var(--fixed-white);
+      font-weight: bold;
+      img {
+        vertical-align: text-top;
+      }
+      span {
+        margin-left:10px;
+      }
+    }
+  }
+  .right-deserved {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 //SWITCH

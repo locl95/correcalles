@@ -67,6 +67,7 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
       LPdiff: LPdiff()
     };
   });
+  
   const sortedData = dataWithLPdiff.sort(compare);
   const maxGames = Math.max(...sortedData.map(summoner => summoner.ranked.gamesPlayed));
 

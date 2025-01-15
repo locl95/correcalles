@@ -46,7 +46,7 @@ const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: Simplified
     }
   };
 
-  const dataWithPosition = position === 'all' ? data : data.filter(item => item.ranked.mainRole === position);
+  const dataWithPosition = position === 'all' ? data : data.filter(item => item.ranked.teamPosition === position);
 
   const dataWithLPdiff = dataWithPosition.map((item) => {
     const cachedSummoner = cachedData.find((csummoner) => csummoner.summonerName === item.summonerName && csummoner.summonerTag === item.summonerTag);

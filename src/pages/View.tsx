@@ -18,6 +18,7 @@ export interface Match {
   gameDuration: number;
   gameFinishedCorrectly: boolean;
   individualPosition: string;
+  teamPosition: string;
   kills: number;
   lane: string;
   role: string;
@@ -31,7 +32,8 @@ export interface Match {
 export interface Ranked {
   gamesPlayed: number;
   leaguePoints: number;
-  mainRole: string;
+  individualPosition: string;
+  teamPosition: string;
   matches: Match[];
   rank: string;
   tier: string;
@@ -129,11 +131,11 @@ function View() {
 
   const positions = [
     { key: 'all', icon: 'ALL' },
-    { key: 'SOLO', icon: 'TOP' },
-    { key: 'NONE', icon: 'JUNGLE' },
-    { key: 'SOLO', icon: 'MID' },
-    { key: 'CARRY', icon: 'ADC' },
-    { key: 'SUPPORT', icon: 'SUPPORT' },
+    { key: 'TOP', icon: 'TOP' },
+    { key: 'JUNGLE', icon: 'JUNGLE' },
+    { key: 'MIDDLE', icon: 'MID' },
+    { key: 'BOTTOM', icon: 'ADC' },
+    { key: 'UTILITY', icon: 'SUPPORT' },
   ];
 
   return (

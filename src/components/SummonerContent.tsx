@@ -88,7 +88,7 @@ const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, d
                       src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${champ.name}.png`}/>
                 <div>{(champ.wins / champ.count * 100).toFixed(2)}%
                     ({champ.wins}V {champ.count - champ.wins}L) <span
-                        className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</span>
+                        className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect` : kda.toFixed(2) + `:1`}</span>
                 </div>
               </li>
             )

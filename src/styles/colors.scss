@@ -27,6 +27,7 @@
   --tw-bg-opacity: 1;
   --light-black: #ebebeb;
   --dark-blue: #1f2937;
+  --border-grey: #7f7f7f45;
 }
 .dark-theme {
   --tw-bg-opacity: 1;
@@ -42,6 +43,7 @@
   --bg-red: #390200;
   --green: #029e2b;
   --red: #a30006;
+  --border-grey: #ffffff45;
   &.correcalles {
     background-color: var(--bg-color);
   }

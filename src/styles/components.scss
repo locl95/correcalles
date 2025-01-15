@@ -231,6 +231,7 @@
       font-weight: bold;
       justify-content: space-between;
       gap: 5px;
+      min-width: 180px;
       &.green {
         border-left: 5px solid var(--border-green);
       }

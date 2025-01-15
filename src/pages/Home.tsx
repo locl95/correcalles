@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ViewsList from '../components/ViewsList';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import ErrorPage from './ErrorPage';
 
 export interface ViewResponse {
   records: View[];
@@ -19,6 +20,7 @@ export interface View {
 const Home = () => {
   const [viewsList, setViewsList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,14 +35,16 @@ const Home = () => {
     })
     .catch(error => {
       console.error(error);
-      navigate("/error");
+      setError(true);
     });
   }, [navigate]);
 
   return (
     <div className={`content`} >
-      <h1 className="title">All views</h1>
-      <ViewsList list={viewsList} loading={loading} />
+      {error ? <ErrorPage /> : <>
+        <h1 className="title">All views</h1>
+        <ViewsList list={viewsList} loading={loading} />
+      </>}
     </div>
   );
 }

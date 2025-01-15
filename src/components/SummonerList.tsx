@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import { SimplifiedSummoner } from '../pages/View';
 import SummonerItem from './SummonerItem';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
 
-const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string, position: string}> = ({ loading, data, cachedData, ddversion, position }) => {
+const SummonerList: React.FC<{data: SimplifiedSummoner[], cachedData: SimplifiedSummoner[], ddversion: string, position: string}> = ({ data, cachedData, ddversion, position }) => {
   const [sortby, setSortby] = useState('tier');
   const [isAsc, setIsAsc] = useState(true);
 
@@ -47,7 +45,6 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
       setIsAsc(true);  
     }
   };
-  console.log(data);
 
   const dataWithPosition = position === 'all' ? data : data.filter(item => item.ranked.mainRole === position);
 
@@ -86,8 +83,7 @@ const SummonerList: React.FC<{loading: boolean, data: SimplifiedSummoner[], cach
         <div className="col cursor-pointer" onClick={() => handleSort("games")}>GAMES {sortby === `games` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
         <div className="col cursor-pointer" onClick={() => handleSort("winrate")}>WINRATE {sortby === `winrate` && (isAsc ? <CaretDownOutlined /> : <CaretUpOutlined />)}</div>
       </div>
-      {loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> }
-      {!loading && sortedData.map((summoner, index) => {
+      {sortedData.map((summoner, index) => {
         return (
           <SummonerItem key={summoner.summonerName+`#`+summoner.summonerTag} summoner={summoner} ccRank={index+1} maxGames={maxGames} ddversion={ddversion}  />
         )

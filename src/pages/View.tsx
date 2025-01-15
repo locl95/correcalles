@@ -3,6 +3,9 @@ import SummonerList from '../components/SummonerList';
 import Dropdown from '../small-components/Dropdown';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import ErrorPage from './ErrorPage';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 export interface Match {
   id: string;
@@ -60,6 +63,7 @@ function View() {
   const [data, setData] = useState<Summoner[]>([]);
   const [cachedData, setCachedData] = useState<Summoner[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
@@ -87,7 +91,7 @@ function View() {
         setLastVersion(ddragonResponse.data[0]);
       } catch (error) {
         console.error('Error fetching data:', error);
-        navigate('/error');
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -131,16 +135,20 @@ function View() {
 
   return (
     <div className={`content`} >
-      <h1 className="title">{loading ? `Correcalles.gg` : viewName}</h1>
-      <Dropdown defaultType={type} setType={handleTabClick} />
-      <div className={"positions-icons"}>
-        {positions.map(({ key, icon }) => (
-          <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
-            <img src={`/icons/${icon}-${position === key ? 'light' : 'dark'}.png`} alt={icon} />
+      {error ? <ErrorPage /> : (loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> : 
+        <>
+          <h1 className="title">{viewName}</h1>
+          <Dropdown defaultType={type} setType={handleTabClick} />
+          <div className={"positions-icons"}>
+            {positions.map(({ key, icon }) => (
+              <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
+                <img src={`/icons/${icon}-${position === key ? 'light' : 'dark'}.png`} alt={icon} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {<SummonerList loading={loading} data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} position={position} /> }
+          {<SummonerList data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} position={position} /> }
+        </>
+      )}
     </div>
   );
 }

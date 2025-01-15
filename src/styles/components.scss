@@ -30,7 +30,6 @@
     padding-left: 1rem;
     padding-right: 1rem;
     --tw-bg-opacity: 1;
-    background-color: #ef4444;
     background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
     cursor: pointer;
     color: var(--fixed-white);
@@ -47,6 +46,9 @@
       span {
         margin-left:10px;
       }
+    }
+    &:hover {
+      background-color: #fd5656;
     }
   }
   .right-deserved {

@@ -31,7 +31,6 @@ const Layout: React.FC = () => {
                 href="https://ko-fi.com/Q5Q815ZBU4"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition"
             >
                 <img
                     src="/icons/kofi.svg"

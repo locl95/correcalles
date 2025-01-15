@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
         </div>
       </header>
       <main className="page correcalles-width pt-20">
-        <Outlet />
+        <Outlet context={{ darkMode }} />
       </main>
       <footer className="footer-container">
         <div className='footer-content correcalles-width'> 

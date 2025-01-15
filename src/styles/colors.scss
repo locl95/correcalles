@@ -6,6 +6,7 @@
 }
 :root {
   --bg-color: #ffffff;
+  --bg-color-inv: rgb(24 26 32 / var(--tw-bg-opacity));
   --text-color: #18181b;
   --bg-turkish: #00acad1c;
   --border-turkish: #00acad2e;
@@ -30,6 +31,7 @@
 .dark-theme {
   --tw-bg-opacity: 1;
   --bg-color: rgb(24 26 32 / var(--tw-bg-opacity));
+  --bg-color-inv: #ffffff;
   --light-black: rgb(34 36 42 / var(--tw-bg-opacity));
   --text-color: #ffffff;
   --bg-turkish: #0095DA;

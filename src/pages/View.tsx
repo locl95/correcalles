@@ -6,6 +6,7 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import ErrorPage from './ErrorPage';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import { useOutletContext } from 'react-router-dom';
 
 export interface Match {
   id: string;
@@ -70,6 +71,7 @@ function View() {
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `SOLO`);
   const [position, setPosition] = useState('all');
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
+  const { darkMode } = useOutletContext<{ darkMode: boolean }>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -142,7 +144,7 @@ function View() {
           <div className={"positions-icons"}>
             {positions.map(({ key, icon }) => (
               <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
-                <img src={`/icons/${icon}-${position === key ? 'light' : 'dark'}.png`} alt={icon} />
+                <img src={`/icons/${icon}-${position === key ? (darkMode ? 'light' : 'dark') : (darkMode ? 'dark' : 'light')}.png`} alt={icon} />
               </div>
             ))}
           </div>

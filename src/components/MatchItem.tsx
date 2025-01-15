@@ -8,7 +8,7 @@ const MatchItem: React.FC<{match: Match, ddversion: string}> = ({ match, ddversi
   const kda = match.deaths !== 0 ? (match.kills+match.assists)/match.deaths : 9999;
 
   return (
-    <div className={`match-item ${match.win ? "green" : "red"}`} onClick={() => setVisible(!visible)}>
+    <div className={`match-item ${match.gameFinishedCorrectly ? (match.win ? "green" : "red") : "grey"}`} onClick={() => setVisible(!visible)}>
       <div className='col icon-image'>
         <img className='small-img'
           src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${match.championName}.png`}

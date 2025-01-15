@@ -16,6 +16,7 @@ export interface Match {
   deaths: number;
   enemyMissingPings: number;
   gameDuration: number;
+  gameFinishedCorrectly: boolean;
   individualPosition: string;
   kills: number;
   lane: string;

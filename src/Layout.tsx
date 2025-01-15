@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Switch } from 'antd';
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import MySwitch from './small-components/Switch';
 
 const Layout: React.FC = () => {
   const [darkMode, toggleTheme] = useState(JSON.parse(Cookies.get("darkMode") || "false"));
@@ -17,7 +17,7 @@ const Layout: React.FC = () => {
     <div className={`correcalles ${darkMode ? "dark-theme" : ""}`} >
       <header className="header-container">
         <div className='header-menu correcalles-width'>
-          <Switch className={`switch`} checked={darkMode} onChange={handleToggleTheme} />
+          <MySwitch darkMode={darkMode} toggleDarkMode={handleToggleTheme} />
           <h1 onClick={() => {navigate(`/`)}}>Correcalles.gg</h1>
         </div>
       </header>

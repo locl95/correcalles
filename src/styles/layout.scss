@@ -65,7 +65,8 @@ html, body, #root, .correcalles {
     border-radius: 5px;
   }
   .page, .header-container {
-    padding: 10px;
+    padding: 5px;
+    box-sizing: border-box;
   }
 }
 .header-container {

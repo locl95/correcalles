@@ -73,7 +73,7 @@ const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, d
         </div>
         {false && <div className="col bigger-font">
           <div className='font-grey'>{(kills / num_matches).toFixed(2)}/{(deaths / num_matches).toFixed(2)}/{(assists / num_matches).toFixed(2)}</div>
-          <div className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect KDA` : kda.toFixed(2) + `:1`}</div>
+          <div className={`${kda < 2 ? `font-red` : (kda < 5 ? `font-orange` : `font-green`)}`}>{kda === 9999 ? `Perfect` : kda.toFixed(2) + `:1`}</div>
           <div className={`${tiltedpings / num_matches < 4 ? `font-green` : (tiltedpings / num_matches < 10 ? `font-orange` : `font-red`)}`}>{(tiltedpings / num_matches).toFixed(2)}
               <QuestionOutlined className='font-orange'/></div>
           <div className={`${max_tiltedpings < 4 ? `font-green` : (max_tiltedpings < 10 ? `font-orange` : `font-red`)}`}>màx. {max_tiltedpings}

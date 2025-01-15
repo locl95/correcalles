@@ -1,5 +1,7 @@
 import React from 'react';
-import { FaRegMoon, FaRegSun } from 'react-icons/fa';  
+import { FaRegMoon } from 'react-icons/fa';  
+import { ImSun } from "react-icons/im";
+
 
 type SwitchComponentProps = {
   darkMode: boolean;
@@ -12,7 +14,7 @@ const Switch: React.FC<SwitchComponentProps> = ({ darkMode, toggleDarkMode })  =
     <div className="switch-container">
       <div className={`switch ${darkMode ? 'checked' : ''}`} onClick={toggleDarkMode}>
         <div className="circle">
-          {darkMode ? <FaRegMoon className="icon" /> : <FaRegSun className="icon" />}
+          {darkMode ? <FaRegMoon className="icon" /> : <ImSun className="icon" />}
         </div>
       </div>
     </div>

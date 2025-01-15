@@ -371,7 +371,7 @@
   .switch {
     width: 60px;
     height: 30px;
-    background-color: #000000;
+    background-color: white;
     border-radius: 30px;
     position: relative;
     cursor: pointer;
@@ -383,19 +383,19 @@
     }
     .circle {
       position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 24px;
-      height: 24px;
-      background-color: white;
+      top: 1px;
+      left: 1px;
+      width: 28px;
+      height: 28px;
+      background-color: rgb(34 36 42);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: transform 0.3s ease;
       .icon {
-        font-size: 14px;
-        color: #333;
+        font-size: 16px;
+        color: white;
       }
     }
   }

@@ -65,7 +65,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         </div>
       </div>
       {visible && 
-        <SummonerContent item={summoner.ranked} ddversion={ddversion} />
+        <SummonerContent summonerName={summoner.summonerName} item={summoner.ranked} ddversion={ddversion} />
       }
     </li>
   );

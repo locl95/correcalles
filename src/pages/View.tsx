@@ -8,6 +8,15 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import { useOutletContext } from 'react-router-dom';
 
+export interface MatchUp {
+  assists: number;
+  championId: number;
+  championName: string;
+  deaths: number;
+  kills: number;
+  teamPosition: string;
+}
+
 export interface Match {
   id: string;
   assistMePings: number;
@@ -27,6 +36,7 @@ export interface Match {
   wardsPlaced: number;
   win: boolean;
   championName: string;
+  matchUp: MatchUp;
 }
 
 export interface Ranked {
@@ -160,7 +170,7 @@ function View() {
     { key: 'BOTTOM', icon: 'ADC' },
     { key: 'UTILITY', icon: 'SUPPORT' },
   ];
-
+  console.log(data);
   return (
     <div className={`content`} >
       {error.code !== '' ? <ErrorPage error={error} /> : (loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> : 

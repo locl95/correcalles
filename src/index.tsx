@@ -7,7 +7,6 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Layout from './Layout';
 import Home from './pages/Home';
 import View from './pages/View';
-import ErrorPage from './pages/ErrorPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

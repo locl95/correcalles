@@ -4,7 +4,7 @@ import MatchItem from './MatchItem';
 import {Progress} from 'antd';
 import {QuestionOutlined} from '@ant-design/icons';
 
-const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, ddversion}) => {
+const SummonerContent: React.FC<{ summonerName:string, item: Ranked, ddversion: string }> = ({summonerName, item, ddversion}) => {
 
   const num_matches = item.matches.length;
   const num_wins = item.matches.filter(match => match.win).length;
@@ -109,7 +109,7 @@ const SummonerContent: React.FC<{ item: Ranked, ddversion: string }> = ({item, d
       <div className="matches-list">
         {item.matches.map((match) => {
           return (
-              <MatchItem key={match.id} match={match} ddversion={ddversion} />
+              <MatchItem summonerName={summonerName} key={match.id} match={match} ddversion={ddversion} />
           )
         })}
       </div>

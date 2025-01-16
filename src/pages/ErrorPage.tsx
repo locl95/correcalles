@@ -1,9 +1,19 @@
-const ErrorPage = () => {
+import React from 'react';
+
+type ErrorComponentProps = {
+  error: {
+    code: string;
+    status: string;
+    message: string;
+  };
+};
+
+const ErrorPage: React.FC<ErrorComponentProps> = ({ error })  => {
   return (
     <div className={`correcalles`} >
-      <div className="error-404">
-        <h2>ERROR!</h2>
-        <h3>Page doesn't exist</h3>
+      <div className="error font-white">
+        <h2>{error.code} {error.status}</h2>
+        <h3>{error.message}</h3>
       </div> 
     </div> 
   );

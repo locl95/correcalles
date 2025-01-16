@@ -17,26 +17,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />, 
-    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
         element: <Home />,
-        errorElement: <ErrorPage />,
       },
       {
         path: "/:viewId/",
         element: <View />,
-        errorElement: <ErrorPage />,
-      }/*,
-      {
-        path: "/error/",
-        element: <ErrorPage />,
-      },
-      {
-        path: "*", 
-        element: <Home />,
-      }*/
+      }
     ],
   }
 ]);

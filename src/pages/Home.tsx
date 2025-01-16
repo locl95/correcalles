@@ -20,7 +20,11 @@ export interface View {
 const Home = () => {
   const [viewsList, setViewsList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    code: '',
+    status: '',
+    message: '',
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,13 +39,31 @@ const Home = () => {
     })
     .catch(error => {
       console.error(error);
-      setError(true);
+      if (axios.isAxiosError(error)) {
+        setError({
+          code: error.code || 'Unknown Code',
+          status: error.status?.toString() || 'Unknown Status',
+          message: error.message,
+        });
+      } else if (error instanceof Error) {
+        setError({
+          code: 'Unknown Code',
+          status: 'Unknown Status',
+          message: error.message,
+        });
+      } else {
+        setError({
+          code: 'Unknown Code',
+          status: 'Unknown Status',
+          message: 'An unexpected error occurred.',
+        });
+      }
     });
   }, [navigate]);
 
   return (
     <div className={`content`} >
-      {error ? <ErrorPage /> : <>
+      {error.code !== ''  ? <ErrorPage error={error} /> : <>
         <h1 className="title">All views</h1>
         <ViewsList list={viewsList} loading={loading} />
       </>}

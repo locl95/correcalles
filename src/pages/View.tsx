@@ -67,7 +67,11 @@ function View() {
   const [data, setData] = useState<Summoner[]>([]);
   const [cachedData, setCachedData] = useState<Summoner[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    code: '',
+    status: '',
+    message: '',
+  });
   const { viewId } = useParams();
   const [searchParams] = useSearchParams();
   const queueType = searchParams.get("queue_type");
@@ -96,7 +100,26 @@ function View() {
         setLastVersion(ddragonResponse.data[0]);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError(true);
+
+        if (axios.isAxiosError(error)) {
+          setError({
+            code: error.code || 'Unknown Code',
+            status: error.status?.toString() || 'Unknown Status',
+            message: error.message,
+          });
+        } else if (error instanceof Error) {
+          setError({
+            code: 'Unknown Code',
+            status: 'Unknown Status',
+            message: error.message,
+          });
+        } else {
+          setError({
+            code: 'Unknown Code',
+            status: 'Unknown Status',
+            message: 'An unexpected error occurred.',
+          });
+        }
       } finally {
         setLoading(false);
       }
@@ -140,7 +163,7 @@ function View() {
 
   return (
     <div className={`content`} >
-      {error ? <ErrorPage /> : (loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> : 
+      {error.code !== '' ? <ErrorPage error={error} /> : (loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> : 
         <>
           <h1 className="title">{viewName}</h1>
           <Dropdown defaultType={type} setType={handleTabClick} />

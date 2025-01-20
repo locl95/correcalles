@@ -12,7 +12,7 @@ const MatchItem: React.FC<{summonerName: string, match: Match, ddversion: string
 
   return (
     <>
-      <div className={`match-item ${match.gameFinishedCorrectly ? (match.win ? "green" : "red") : "grey"}`} onClick={() => setVisible(!visible)}>
+      <div className={`match-item ${match.gameFinishedCorrectly && match.gameDuration > 300 ? (match.win ? "green" : "red") : "grey"}`} onClick={() => setVisible(!visible)}>
         <div className='col icon-image'>
           <img className='small-img'
             src={`https://ddragon.leagueoflegends.com/cdn/${ddversion}/img/champion/${match.championName}.png`}

@@ -36,7 +36,7 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
         <div className="col flex-center-align progress-games"><span>{gamesPlayed}</span>
           <Progress strokeLinecap="butt" percent={(Math.floor(gamesPlayed/maxGames * 100))} strokeColor='#1677ff' showInfo={false} />
         </div>
-        <Progress strokeColor={winrate<0.5 ? "#a30006" : "#029e2b"} strokeWidth={15} strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(winrate * 100))} />
+        <Progress strokeColor={winrate<0.5 ? "#a30006" : "#029e2b"} strokeWidth={12} strokeLinecap="butt" className="col" type="circle" size={60} percent={(Math.floor(winrate * 100))} />
         <div className="icon-line">
           <div className="icon-button op-gg" onClick={(e) => {
             e.stopPropagation();

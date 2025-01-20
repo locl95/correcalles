@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import './styles/main.scss';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout';
 import Home from './pages/Home';
 import View from './pages/View';
@@ -12,22 +12,30 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/:viewId/",
+          element: <View />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <Layout />, 
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/:viewId/",
-        element: <View />,
-      }
-    ],
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
   }
-]);
+);
 
 root.render(
   <React.StrictMode>

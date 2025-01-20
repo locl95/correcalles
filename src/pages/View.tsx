@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import SummonerList from '../components/SummonerList';
 import Dropdown from '../small-components/Dropdown';
+import Search from '../small-components/Search';
 import axios from 'axios';
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import ErrorPage from './ErrorPage';
@@ -87,6 +88,7 @@ function View() {
   const queueType = searchParams.get("queue_type");
   const [type, setType] = useState(queueType ? queueType.toLocaleUpperCase() : `SOLO`);
   const [position, setPosition] = useState('all');
+  const [searchQuery, setSearchQuery] = useState("");
   const [lastVersionDdragon, setLastVersion] = useState('14.21.1');
   const { darkMode } = useOutletContext<{ darkMode: boolean }>();
   const navigate = useNavigate();
@@ -170,21 +172,29 @@ function View() {
     { key: 'BOTTOM', icon: 'ADC' },
     { key: 'UTILITY', icon: 'SUPPORT' },
   ];
-  console.log(data);
+  
   return (
     <div className={`content`} >
       {error.code !== '' ? <ErrorPage error={error} /> : (loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /> : 
         <>
           <h1 className="title">{viewName}</h1>
-          <Dropdown defaultType={type} setType={handleTabClick} />
-          <div className={"positions-icons"}>
-            {positions.map(({ key, icon }) => (
-              <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
-                <img src={`/icons/${icon}-${position === key ? (darkMode ? 'light' : 'dark') : (darkMode ? 'dark' : 'light')}.png`} alt={icon} />
-              </div>
-            ))}
+          <div className='filters'>
+            <Dropdown defaultType={type} setType={handleTabClick} />
+            <div className={"positions-icons"}>
+              {positions.map(({ key, icon }) => (
+                <div key={icon} className={`icon ${position === key ? 'active' : ''}`} onClick={() => setPosition(key)}>
+                  <img src={`/icons/${icon}-${position === key ? (darkMode ? 'light' : 'dark') : (darkMode ? 'dark' : 'light')}.png`} alt={icon} />
+                </div>
+              ))}
+            </div>
+            <Search setSearchQuery={setSearchQuery} placeholder="Search..." />
           </div>
-          {<SummonerList data={simplifiedData} cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} ddversion={lastVersionDdragon} position={position} /> }
+          <SummonerList 
+            data={simplifiedData.filter((item) => item.summonerName.toLowerCase().includes(searchQuery.toLowerCase()) || item.ranked.tier.toLowerCase().includes(searchQuery.toLowerCase()))} 
+            cachedData={simplifiedCachedData ? simplifiedCachedData : simplifiedData} 
+            ddversion={lastVersionDdragon} 
+            position={position} 
+          />
         </>
       )}
     </div>

@@ -56,10 +56,13 @@ const SummonerItem: React.FC<{summoner: SimplifiedSummoner, ccRank: number, maxG
                 alt='icon'
               /><span>{summoner.summonerName}</span>
               </div>
-            <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
+              <div className="LPdiff">{LPdiff === 0 ? `` : (LPdiff > 0 ? <RiseOutlined /> : <FallOutlined />)}
+                <span>{LPdiff > 0 ? `+` : ``}{LPdiff !== 0 && LPdiff}</span>
+              </div>
           </div>
           <div className="col-line">
             <div className="tier">{tier + ` ${(tier === 'GRANDMASTER' || tier === 'MASTER' || tier === 'CHALLENGER') ? '' : rank} - ` + leaguePoints + ` LP`} </div>
+            <img className="tier-img" src={`/icons/${tier.toLocaleLowerCase()}.webp`} alt={tier} />
           </div>
           <Progress strokeColor={winrate<0.5 ? "#a30006" : "#029e2b"} strokeWidth={15} strokeLinecap="butt" className="col" percent={(Math.floor(winrate * 100))} />
         </div>

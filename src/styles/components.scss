@@ -395,7 +395,6 @@
       flex-direction: column;
       .col-line {
         display: flex;
-        justify-content: space-evenly;
         align-items: center;
         width: 100%;
         margin-bottom:5px;
@@ -413,6 +412,10 @@
         }
         .tier-img {
           width: 60px;
+          margin-left: auto;
+        }
+        .LPdiff {
+          margin-left: auto;
         }
       }  
       .small-img {
